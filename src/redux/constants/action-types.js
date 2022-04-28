@@ -16,7 +16,8 @@ export const Account_Action_Types = {
 export const Collection_Action_Types = {
   Fetch_Collection: 'Fetch_Collection',
   SET_COLLECTION: 'SET_COLLECTION',
-  Remove_Collection: 'Remove_Collection'
+  Remove_Collection: 'Remove_Collection',
+  FETCH_ONE_COLLECTION: 'FETCH_ONE_COLLECTION'
 };
 export const User_Action_Types = {
   Fetch_User: 'Fetch_User',

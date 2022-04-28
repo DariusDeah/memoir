@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
+import { Link } from 'react-router-dom';
 import { collectionApi } from '../../api/collections.api';
 import DeleteIcon from '../UI/Icons/Delete.icon';
 import EditIcon from '../UI/Icons/Edit.icon';
@@ -49,6 +50,9 @@ function Collections({ collections, user, addToCollection }) {
                 collections.map((collection) => (
                   <>
                     <li key={collection._id}>
+                      <Link to={`collections/${collection._id}/view`}>
+                        <button type="button">view</button>
+                      </Link>
                       <a className="block h-full p-4 border border-gray-700 rounded-lg hover:border-pink-600 cursor-pointer p-8 space-y-2">
                         <h5 className="font-medium ">{collection.name}</h5>
                         <button

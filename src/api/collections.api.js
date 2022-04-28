@@ -13,6 +13,15 @@ class CollectionApi {
     }
   }
 
+  async getCollectionById(collectionId) {
+    try {
+      const res = await API_V1.get(`/collections/${collectionId}`, { withCredentials: true });
+      return res.data;
+    } catch (error) {
+      throw new Error('error getting collection');
+    }
+  }
+
   async createCollection(collectionData) {
     try {
       await API_V1.post('/collections', collectionData, {

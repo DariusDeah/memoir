@@ -16,6 +16,7 @@ import EditPostPage from './pages/EditPostPage';
 import Collections from './components/Collections/ColectionsList.component';
 import Modal from './components/UI/Modal.ui';
 import { getCollections } from './redux/actions/collections.actions';
+import CollectionPage from './pages/CollectionPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ function App() {
             <Route path="feature-request" element={<FeaturesRequestPage />} />
             <Route path="explore" element={<ExplorePage />} />
             <Route path="posts/:postId/edit" element={<EditPostPage />} />
+            <Route path="collections/:collectionId/view" element={<CollectionPage />} />
 
             <Route path="posts/:postId" element={<PostPage />} />
             <Route path="profile/:userId" element={<ProfilePage />} />

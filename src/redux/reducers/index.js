@@ -9,6 +9,7 @@ import followers from './followers.reducer';
 import likes from './likes.reducer';
 // import profile from './profile'
 import profileCollections from './profileCollections.reducer';
+import collection from './collection.reducer';
 
 export default combineReducers({
   posts,
@@ -17,6 +18,7 @@ export default combineReducers({
   user,
   comments,
   likes,
+  collection,
   // profile,
   profileCollections,
   followers
