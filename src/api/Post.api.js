@@ -80,10 +80,13 @@ class PostApi {
     try {
       const tags = [...new Set(postData.tags)];
       let contentShort;
+
       if (postData.content.length > 100) {
         contentShort = postData.content.substring(0, 100);
       }
-      contentShort = postData.content;
+      if (postData.content.length < 100) {
+        contentShort = postData.content;
+      }
       const formData = new FormData();
       formData.append('title', postData.title);
       formData.append('content', postData.content);
@@ -156,8 +159,8 @@ class PostApi {
   async editPost(postId, postData) {
     try {
       const postFormData = this.generatePostForm(postData);
-      await API_V1({
-        method: 'post',
+      const post = await API_V1({
+        method: 'put',
         url: `/posts/${postId}`,
         data: postFormData,
         headers: {
@@ -166,8 +169,9 @@ class PostApi {
         },
         withCredentials: true
       });
+      return post;
     } catch (error) {
-      console.log(error);
+      throw new Error('error editing  post');
     }
   }
 

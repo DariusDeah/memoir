@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { Editor, EditorState } from "draft-js";
-import "draft-js/dist/Draft.css";
-import { RichUtils } from "draft-js";
+import React, { useState } from 'react';
+import { Editor, EditorState } from 'draft-js';
+import 'draft-js/dist/Draft.css';
+import { RichUtils } from 'draft-js';
 
-const RichTextEditor = (props) => {
+const RichTextEditor = ({ writeContent, placeholder }) => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
   const boldClick = (e) => {
     e.preventDefault();
-    let nextState = RichUtils.toggleInlineStyle(editorState, "BOLD");
+    let nextState = RichUtils.toggleInlineStyle(editorState, 'BOLD');
     setEditorState(nextState);
     // setSelected("BOLD");
     console.log(editorState);
   };
   const italicClick = (e) => {
     e.preventDefault();
-    let nextState = RichUtils.toggleInlineStyle(editorState, "ITALIC");
+    let nextState = RichUtils.toggleInlineStyle(editorState, 'ITALIC');
     setEditorState(nextState);
   };
   return (
@@ -179,7 +179,8 @@ const RichTextEditor = (props) => {
         <Editor
           editorState={editorState}
           onChange={setEditorState}
-          onBlur={(e) => props.writeContent(e.target.innerText)}
+          onBlur={(e) => writeContent(e.target.innerText)}
+          placeholder={placeholder}
         />
       </div>
     </div>
