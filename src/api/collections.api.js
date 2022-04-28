@@ -3,7 +3,6 @@ import { API_V1 } from '../config/axios.config';
 class CollectionApi {
   async getUserCollections(userId) {
     try {
-      console.log(userId);
       const res = await API_V1.get(
         `/users/${userId}/collections`,
         { withCredentials: true }
@@ -33,6 +32,22 @@ class CollectionApi {
       );
     } catch (error) {
       throw new Error('error creating collection');
+    }
+  }
+
+  async removeCollection(collectionId) {
+    try {
+      await API_V1.delete(`collections/${collectionId}`, { withCredentials: true });
+    } catch (error) {
+      throw new Error('Error deleting collection');
+    }
+  }
+
+  async editCollection(collectionId, data) {
+    try {
+      await API_V1.patch(`collections/${collectionId}`, data, { withCredentials: true });
+    } catch (error) {
+      throw new Error('Error editing collection');
     }
   }
 }

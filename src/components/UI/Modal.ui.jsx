@@ -34,7 +34,7 @@ function Modal({
           flex
           items-end
           justify-center
-
+w-full
           px-4
           pt-4
           pb-20
