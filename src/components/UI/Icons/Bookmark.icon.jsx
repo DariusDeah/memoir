@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Collections from '../../Collections/ColectionsList.component';
 import Modal from '../Modal.ui';
+import { collectionApi } from '../../../api/collections.api';
 
 function Bookmark({ postId }) {
   const [modalActive, setModalActive] = useState(false);
@@ -14,6 +15,9 @@ function Bookmark({ postId }) {
     setModalActive(!modalActive);
     console.log(modalActive);
   };
+  const addPostToCollection = async (collectionId) => {
+    await collectionApi.addPostToCollection(collectionId, postId);
+  };
   return (
     <>
       <div>
@@ -25,7 +29,11 @@ function Bookmark({ postId }) {
           confirmOption={undefined}
         >
           {collections ? (
-            <Collections collections={collections} user={account} />
+            <Collections
+              collections={collections}
+              user={account}
+              addToCollection={addPostToCollection}
+            />
           ) : (
             <div className="text-center">
               <img

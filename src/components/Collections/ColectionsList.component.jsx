@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCollections } from '../../redux/actions/collections.actions';
 
-function Collections({ collections, user }) {
+function Collections({ collections, user, addToCollection }) {
   return (
     <article className=" rounded-xl">
       {user && (
@@ -26,12 +26,17 @@ function Collections({ collections, user }) {
             <ul className="mt-4 space-y-2">
               {collections &&
                 collections.map((collection) => (
-                  <li>
+                  <li key={collection._id}>
                     <a
                       className="block h-full p-4 border border-gray-700 rounded-lg hover:border-pink-600 cursor-pointer"
                       type="button"
+                      onClick={() => addToCollection(collection._id)}
                     >
                       <h5 className="font-medium ">{collection.name}</h5>
+                      <h5 className="font-medium ">
+                        posts:
+                        {collection.postIds && collection.postIds.length}
+                      </h5>
 
                       <p className="mt-1 text-xs font-medium " />
                     </a>
