@@ -1,19 +1,30 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function Modal({ showModal, closeModal, title, content, confirmOption }) {
+function Modal({
+  showModal,
+  closeModal,
+  title,
+  content,
+  confirmOption,
+  children
+}) {
   const [modalIsActive, setModalIsActive] = useState(showModal);
-
-  const toggleModal = (bool, event) => {
+  // const toggleModal = (bool, event) => {
+  //   event.preventDefault();
+  //   setModalIsActive(bool);
+  // };
+  const closeModalFunc = (event) => {
     event.preventDefault();
-    setModalIsActive(bool);
+    setModalIsActive(false);
+    console.log('works');
   };
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {showModal && (
         <div
-          className="overflow-y-auto  fixed inset-0 z-50"
+          className="overflow-y-auto max-h-max  fixed inset-0 z-50 flex justify-center align-top"
           aria-labelledby="modal-title"
           role="dialog"
           aria-modal="true"
@@ -23,7 +34,7 @@ function Modal({ showModal, closeModal, title, content, confirmOption }) {
           flex
           items-end
           justify-center
-          min-h-screen
+
           px-4
           pt-4
           pb-20
@@ -34,7 +45,7 @@ function Modal({ showModal, closeModal, title, content, confirmOption }) {
             {/* <!--This is the background that overlays when the modal is active. It  has opacity, and that's why the background looks gray.-->
               <!-----
           add this code to this very first div:
-         
+
         --> */}
             <div
               className="transition-opacity fixed inset-0 bg-gray-500 bg-opacity-75"
@@ -61,10 +72,12 @@ function Modal({ showModal, closeModal, title, content, confirmOption }) {
             sm:my-8 sm:align-middle sm:max-w-xl sm:w-full
           "
             >
-              <div>
-                <div className="mt-3 text-left sm:mt-5">
-                  <h1
-                    className="
+              {title && content ? (
+                <>
+                  <div>
+                    <div className="mt-3 text-left sm:mt-5">
+                      <h1
+                        className="
                   mb-8
                   text-2xl
                   font-semibold
@@ -72,19 +85,19 @@ function Modal({ showModal, closeModal, title, content, confirmOption }) {
                   tracking-tighter
                   text-neutral-600
                 "
-                  >
-                    {title}
-                  </h1>
-                  <p className="mx-auto text-base leading-relaxed text-gray-500">
-                    {content}
-                  </p>
-                </div>
-              </div>
-              <div className="mt-6 sm:flex">
-                <div className="mt-3 rounded-lg sm:mt-0 sm:ml-3">
-                  <Link to="sign-auth">
-                    <button
-                      className="
+                      >
+                        {title}
+                      </h1>
+                      <p className="mx-auto text-base leading-relaxed text-gray-500">
+                        {content}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-6 sm:flex">
+                    <div className="mt-3 rounded-lg sm:mt-0 sm:ml-3">
+                      <Link to="sign-auth">
+                        <button
+                          className="
                     items-center
                     block
                     px-10
@@ -104,16 +117,16 @@ function Modal({ showModal, closeModal, title, content, confirmOption }) {
                   focus:ring-offset-2
                   focus:ring-blue-500
                   "
-                      type="button"
-                      onClick={closeModal}
-                    >
-                      {confirmOption}
-                    </button>
-                  </Link>
-                </div>
-                <div className="mt-3 rounded-lg sm:mt-0">
-                  <button
-                    className="
+                          type="button"
+                          onClick={closeModal}
+                        >
+                          {confirmOption}
+                        </button>
+                      </Link>
+                    </div>
+                    <div className="mt-3 rounded-lg sm:mt-0">
+                      <button
+                        className="
                   items-center
                   block
                   px-10
@@ -133,14 +146,48 @@ function Modal({ showModal, closeModal, title, content, confirmOption }) {
                   focus:ring-offset-2
                   focus:ring-gray-500
                 "
-                    type="button"
-                    onClick={closeModal}
-                  >
-                    {' '}
-                    Cancel{' '}
-                  </button>
-                </div>
-              </div>
+                        type="button"
+                        onClick={closeModal}
+                      >
+                        {' '}
+                        Cancel{' '}
+                      </button>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="">{children}</div>
+                  <div className="mt-3 rounded-lg sm:mt-0">
+                    <button
+                      className="
+                  items-center
+                  block
+                  px-10
+                  py-3.5
+                  text-base
+                  font-medium
+                  text-center text-blue-600
+                  transition
+                  duration-500
+                  ease-in-out
+                  transform
+                  border-2 border-white
+                  shadow-md
+                  rounded-xl
+                  focus:outline-none
+                  focus:ring-2
+                  focus:ring-offset-2
+                  focus:ring-gray-500
+                "
+                      type="button"
+                      onClick={closeModal}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

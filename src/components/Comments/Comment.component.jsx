@@ -63,7 +63,9 @@ function Comment({ commentData }) {
             >
               <div className="flex items-center justify-between">
                 <span className="text-sm font-light text-black ">
-                  {comment.createdAt}
+                  {new Date(comment.createdAt)
+                    .toDateString()
+                    .substring(4, comment.createdAt.length)}
                 </span>
               </div>
               <div className="mt-2 mb-10">

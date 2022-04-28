@@ -1,11 +1,17 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { postApi } from '../../api/Post.api';
+import { getPostLikes } from '../../redux/actions/likes.action';
 import Avatar from '../UI/Avatar.ui';
 import Bookmark from '../UI/Icons/Bookmark.icon';
+import Heart from '../UI/Icons/Heart.icon';
 import Tags from '../UI/Tags.ui';
 
 function PostLayout1() {
   const post = useSelector((state) => state.posts.posts);
+  const account = useSelector((state) => state.account.account);
+  const likes = useSelector((state) => state.likes.likes);
+  console.log({ likes });
   return (
     <article className="prose md:prose-xl max-w-2xl px-6 py-24 mx-auto space-y-12 bg-coolGray-100 text-coolGray-900">
       {post ? (
@@ -28,7 +34,7 @@ function PostLayout1() {
               </time>
             </p>
             <div>
-              <Bookmark />
+              <Bookmark postId={post.id} />
               <img
                 src={post.image}
                 alt="post cover"
@@ -40,6 +46,9 @@ function PostLayout1() {
             {/* POST CONTENT */}
             <p>{post.content}</p>
           </div>
+
+          <Heart accountId={account.id} postId={post.id} likes={likes} />
+
           <div className="pt-12 pb-12 border-t border-b-2 border-grey-500  border-coolGray-300">
             <div className="flex flex-col space-y-4 md:space-y-0 md:space-x-6 md:flex-row ">
               {/* <img src={post.authorPhoto} alt="" className="" /> */}

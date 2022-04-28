@@ -6,19 +6,22 @@ import Comment from '../components/Comments/Comment.component';
 import CommentCreate from '../components/Comments/CommentCreate.component';
 import PostLayout1 from '../components/Posts/PostLayout1.component';
 import { getPostComments } from '../redux/actions/comments.actions';
+import { getPostLikes } from '../redux/actions/likes.action';
 import { getPost } from '../redux/actions/posts.actions';
 
 function PostPage() {
   const [createComment, setCreateComment] = useState(false);
   // const [replyComment, setReplyComment] = useState(false);
   const comments = useSelector((state) => state.comments.comments);
-
+  const likes = useSelector((state) => state.likes.likes);
+  console.log({ likes });
   const dispatch = useDispatch();
   const { postId } = useParams();
   console.log({ postId });
   useEffect(() => {
     dispatch(getPost(postId));
     dispatch(getPostComments(postId));
+    dispatch(getPostLikes(postId));
   }, [dispatch, postId]);
   return (
     <div className="justify-center">

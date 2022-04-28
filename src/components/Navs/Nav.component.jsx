@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { accountApi } from '../../api/Account.api';
+import { getCollections } from '../../redux/actions/collections.actions';
 import Avatar from '../UI/Avatar.ui';
+import CollectionIcon from '../UI/Icons/Collection.icon';
 import Modal from '../UI/Modal.ui';
 
 function Nav() {
@@ -10,6 +13,7 @@ function Nav() {
   const account = useSelector((state) => state.account.account);
   console.log(account);
   const [modalActive, setModalActive] = useState(false);
+  const dispatch = useDispatch();
 
   const toggleModal = (event) => {
     event.preventDefault();
@@ -22,6 +26,15 @@ function Nav() {
     console.log('works');
     setModalActive(!modalActive);
     console.log(modalActive);
+  };
+  useEffect(() => {
+    if (account) {
+      dispatch(getCollections(account.id));
+    }
+  }, [account]);
+
+  const logout = () => {
+    accountApi.logoutAccount();
   };
   return (
     <div className=" px-4 py-5 mx-auto  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 ">
@@ -44,7 +57,6 @@ function Nav() {
                 aria-label="Our product"
                 title="Create a post"
                 className="font-medium tracking-wide hover:cursor-pointer text-gray-700 transition-colors duration-400 hover:text-purple-400"
-                // onClick={(e) => toggleModal(e)}
               >
                 Create+
               </p>
@@ -109,6 +121,18 @@ function Nav() {
                   styles="w-12 h-12"
                 />
               </li>
+              <li>
+                <button
+                  className="font-semibold cursor-pointer"
+                  onClick={logout}
+                  type="button"
+                >
+                  Logout
+                </button>
+              </li>
+              <li>
+                <CollectionIcon />
+              </li>
             </>
           ) : (
             <li>
@@ -130,6 +154,7 @@ function Nav() {
             title="Open Menu"
             className="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"
             onClick={() => setIsMenuOpen(true)}
+            type="button"
           >
             <svg className="w-5 text-gray-600" viewBox="0 0 24 24">
               <path
@@ -168,6 +193,7 @@ function Nav() {
                       title="Close Menu"
                       className="p-2 -mt-2 -mr-2 transition duration-200 rounded hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                       onClick={() => setIsMenuOpen(false)}
+                      type="button"
                     >
                       <svg className="w-5 text-gray-600" viewBox="0 0 24 24">
                         <path

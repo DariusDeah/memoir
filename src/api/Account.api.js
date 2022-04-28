@@ -7,8 +7,6 @@ class AccountApi {
       const user = await API_V1.post('/login', userData, {
         withCredentials: true
       });
-      if (user.status !== 200) throw new Error('error on client');
-      console.log({ user });
       return user.data;
     } catch (error) {
       throw new Error('error logging in user');

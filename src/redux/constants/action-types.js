@@ -6,7 +6,9 @@ export const Post_Action_Types = {
   CREATE: 'CREATE',
   FETCH_ALL_Draft_Posts: 'FETCH_ALL_Draft_Posts'
 };
-
+export const Likes_Action_Types = {
+  FETCH_LIKES: 'FETCH_LIKES',
+};
 export const Account_Action_Types = {
   FETCH_Account: 'FETCH_Account',
   SET_Account: 'SET_Account'
@@ -29,4 +31,8 @@ export const Comment_Action_Types = {
 export const Followers_Action_Types = {
   FetchFollowers: 'Fetch_Followers',
   Add_Followers: 'Add_Followers'
+};
+
+export const Profile_Collection_Action_Types = {
+  Fetch_Profile_Collections: 'Fetch_Profile_Collections',
 };

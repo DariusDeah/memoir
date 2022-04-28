@@ -1,7 +1,7 @@
 import './App.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AuthPage from './components/AuthComponents/Auth.component';
 import Nav from './components/Navs/Nav.component';
 import HomePage from './pages/HomePage';
@@ -13,10 +13,20 @@ import FeaturesRequestPage from './pages/FeaturesRequestPage';
 import CreatePostPage from './pages/CreatePostPage';
 import { getAccount } from './redux/actions/account.actions';
 import EditPostPage from './pages/EditPostPage';
+import Collections from './components/Collections/ColectionsList.component';
+import Modal from './components/UI/Modal.ui';
+import { getCollections } from './redux/actions/collections.actions';
 
 function App() {
   const dispatch = useDispatch();
-  dispatch(getAccount());
+  const account = useSelector((state) => state.account.account);
+  useEffect(() => {
+    dispatch(getAccount());
+    if (account) {
+      dispatch(getCollections(account.id));
+    }
+  }, []);
+
   return (
     <Router>
       <div className="flex-row mx-auto h-full ">
@@ -25,7 +35,7 @@ function App() {
       border-b-black"
         >
           <Nav />
-          {/* <Modal  /> */}
+
         </div>
 
         <div className=" row-span-12 ">

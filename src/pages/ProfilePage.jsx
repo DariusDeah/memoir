@@ -11,6 +11,9 @@ import { getUser } from '../redux/actions/user.actions';
 import Comment from '../components/Comments/Comment.component';
 import { userApi } from '../api/User.api';
 import { getUserFollowers } from '../redux/actions/followers.actions';
+import { getCollections } from '../redux/actions/collections.actions';
+import Collections from '../components/Collections/ColectionsList.component';
+import { getProfileCollections } from '../redux/actions/profileCollections.actions';
 
 function ProfilePage() {
   const [selectedTab, setSelectedTab] = useState(2);
@@ -22,6 +25,9 @@ function ProfilePage() {
   const { user } = useSelector((state) => state.user);
   const comments = useSelector((state) => state.comments.comments);
   const userFollowers = useSelector((state) => state.followers.followers);
+  const collections = useSelector(
+    (state) => state.profileCollections.collections
+  );
   console.log(userFollowers);
   const fetchUserPosts = () => {
     userId && dispatch(getPosts(`?creatorId=${userId}`));
@@ -37,8 +43,11 @@ function ProfilePage() {
   const fetchFollowers = () => {
     dispatch(getUserFollowers(userId));
   };
-  const fetchFollowing = async () => {
-    await userApi.getUserFollowings(userId);
+  const fetchFollowing = () => {
+    userApi.getUserFollowings(userId);
+  };
+  const fetchUserCollections = () => {
+    dispatch(getProfileCollections(userId));
   };
   const handleTabChange = (e, id) => {
     e.preventDefault();
@@ -52,7 +61,7 @@ function ProfilePage() {
     1: ProfileInfo,
     2: Post,
     3: Post,
-    4: 'Collections',
+    4: Collections,
     5: Comment
   };
   const Component = components[selectedTab];
@@ -61,6 +70,7 @@ function ProfilePage() {
     fetchUserPosts();
     fetchFollowers();
     fetchFollowing();
+    fetchUserCollections();
   }, [dispatch, userId]);
 
   return (
@@ -91,24 +101,41 @@ function ProfilePage() {
             </h1>
             {/* <p>{user.website}</p> */}
             <p>{user.bio}</p>
-            {userPosts && userFollowers && (
+            {userPosts && userFollowers && collections && (
               <ProfileStats
                 userPostsLength={userPosts.length}
                 userFollowersLength={userFollowers.length}
+                userCollectionsLength={collections.length}
               />
             )}
             {account.id !== user.id && (
-              <div>
+              <div className="inline-flex items-center -space-x-px text-xs rounded-md">
                 {userFollowers &&
                 userFollowers.filter((x) => x.followerId === account.id)
                   .length ? (
-                  <button
-                    className="px-2 py-1 text-xs font-semibold text-white uppercase transition-colors duration-200 transform  rounded bg-violet-400 focus:outline-none"
-                    type="button"
-                    onClick={followUser}
-                  >
-                    following
-                  </button>
+                  <div className=" inline-flex ">
+                    <button
+                      className="px-2 w-full py-1 text-xs font-semibold text-white uppercase transition-colors duration-200 transform  rounded bg-violet-400 focus:outline-none flex"
+                      type="button"
+                      onClick={followUser}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                        />
+                      </svg>
+                      following
+                    </button>
+                  </div>
                 ) : (
                   <button
                     className="px-2 py-1 text-xs font-semibold text-white uppercase transition-colors duration-200 transform bg-gray-800 rounded hover:bg-gray-700 dark:hover:bg-gray-600 focus:bg-gray-700 dark:focus:bg-gray-600 focus:outline-none"
@@ -132,6 +159,8 @@ function ProfilePage() {
                 fetchUserPosts={fetchUserPosts}
                 fetchUserDrafts={fetchUserDrafts}
                 fetchUserComments={fetchUserComments}
+                fetchUserCollections={fetchUserCollections}
+                selectedTab={selectedTab}
               />
             </div>
           </div>
@@ -140,6 +169,7 @@ function ProfilePage() {
               userPosts={userPosts}
               user={user}
               commentData={comments}
+              collections={collections}
             />
           </div>
         </>

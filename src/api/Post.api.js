@@ -44,11 +44,11 @@ class PostApi {
     }
   }
 
-  async likePost(postId, userId) {
+  async likePost(postId) {
     try {
       await API_V1.post(
         `posts/${postId}/likes`,
-        { userId },
+        null,
         { withCredentials: true }
       );
     } catch (error) {
@@ -82,6 +82,7 @@ class PostApi {
       const formData = new FormData();
       formData.append('title', postData.title);
       formData.append('content', postData.content);
+      formData.append('contentShort', postData.content.substring(0, 100));
       formData.append('coverImg', postData.coverImg);
       formData.append('status', postData.status);
       tags.forEach((element) => {

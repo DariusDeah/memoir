@@ -22,7 +22,9 @@
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
     "web-vitals": "^2.1.4",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "redux-devtools-extension": "^2.13.9"
+
   },
   "scripts": {
     "start": "react-scripts start",
@@ -64,7 +66,6 @@
     "eslint-plugin-react-hooks": "^4.4.0",
     "postcss": "^8.4.12",
     "prettier": "^2.6.2",
-    "redux-devtools-extension": "^2.13.9",
     "tailwindcss": "^3.0.23"
   }
 }

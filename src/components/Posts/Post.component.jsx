@@ -3,10 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { postApi } from '../../api/Post.api';
 import { getPost } from '../../redux/actions/posts.actions';
+import Collections from '../Collections/ColectionsList.component';
 import Avatar from '../UI/Avatar.ui';
 import DottedDropdown from '../UI/DottedDropdown.ui';
 import FailAlert from '../UI/FailAlert.ui';
 import Bookmark from '../UI/Icons/Bookmark.icon';
+import Heart from '../UI/Icons/Heart.icon';
+import Modal from '../UI/Modal.ui';
 import Tags from '../UI/Tags.ui';
 
 function Post() {
@@ -34,6 +37,7 @@ function Post() {
   const makePublicFunction = (postId) => {
     postApi.editPost(postId, { status: 'completed' });
   };
+
   // TODO when clicking on a post pic it should take you to the post no matter what url you are at
   const posts = useSelector((state) => state.posts.posts);
   switch (posts) {
@@ -77,18 +81,22 @@ function Post() {
                         <Link to={`/posts/${post.id}`}>
                           <img
                             className="
-                          object-cover object-center
-                          w-full
-                          mb-8
-                          lg:h-48
-                          md:h-36
-                          rounded-xl
-                          "
+                              object-cover object-center
+                              w-full
+                              mb-8
+                              lg:h-48
+                              md:h-36
+                              rounded-xl
+                              "
                             src={post.coverImg}
                             alt="blog"
                           />
                         </Link>
-                        <Bookmark />
+                        <span className=" inline-flex">
+                          {post.status !== 'draft' && (
+                            <Bookmark postId={post.id} />
+                          )}
+                        </span>
                       </div>
                       <h1
                         className="
@@ -103,11 +111,9 @@ function Post() {
                       </h1>
                       <p className="mx-auto  text-base text-gray-700 md:text-lg overflow-hidden">
                         {' '}
-                        {post.content.substring(0, 100)}
-                        {post.status === 'draft' ? (
+                        {post.contentShort}
+                        {post.status === 'draft' && (
                           <p className="font-bold text-red-600">-Draft</p>
-                        ) : (
-                          ''
                         )}
                       </p>
                       <div className="flex items-center mt-10 ">

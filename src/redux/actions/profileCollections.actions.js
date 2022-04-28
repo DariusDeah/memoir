@@ -1,14 +1,11 @@
-import { Collection_Action_Types } from '../constants/action-types';
+import { collectionApi } from '../../api/collections.api';
+import { Profile_Collection_Action_Types } from '../constants/action-types';
 
-const reducer = (profileCollections = [], action) => {
-  console.log(action.type);
-  switch (action.type) {
-    case Collection_Action_Types.Fetch_Collection:
-      return { ...profileCollections, profileCollections: action.payload };
-    case Collection_Action_Types.SET_COLLECTION:
-      return { ...profileCollections, profileCollections: action.payload };
-    default:
-      return profileCollections;
+export const getProfileCollections = (userId) => async (dispatch) => {
+  try {
+    const data = await collectionApi.getUserCollections(userId);
+    dispatch({ type: Profile_Collection_Action_Types, payload: data });
+  } catch (error) {
+    console.log(error);
   }
 };
-export default reducer;
