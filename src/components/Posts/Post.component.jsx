@@ -15,7 +15,6 @@ import Tags from '../UI/Tags.ui';
 function Post() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  //  const collections = useSelector((state) => state.collections.collections);
   const account = useSelector((state) => state.account.account);
   const items = [
     { id: 1, title: 'edit', action: 'editPost' },
@@ -23,9 +22,8 @@ function Post() {
     { id: 3, title: 'make private', action: 'makePostPrivate' },
     { id: 4, title: 'make public', action: 'makePostPublic' }
   ];
-  const deletePost = async (postId) => {
-    console.log('deleting');
-    await postApi.deletePost(postId);
+  const deletePost = (postId) => {
+    postApi.deletePost(postId);
   };
   const editPost = (postId) => {
     dispatch(getPost(postId));

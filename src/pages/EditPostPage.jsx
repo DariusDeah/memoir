@@ -20,21 +20,17 @@ const schema = yup.object().shape({
   coverImg: yup.mixed(),
   tags: yup.array().max(3)
 });
-function CreatePostPage() {
-  const [currentPost, setCurrentPost] = useState({});
+function EditPostPage() {
   const post = useSelector((state) => state.posts.posts);
+  console.log(post);
   const account = useSelector((state) => state.account.account);
   const [selectedImage, setSelectedImage] = useState('');
   const [content, setContent] = useState('');
   const selectedTags = [];
 
-  useEffect(() => {
-    setCurrentPost(post);
-    console.log({ post });
-  }, []);
   const formik = useFormik({
     initialValues: {
-      title: post.title || 'No Title Yet...',
+      title: post.title,
       content: post.content || 'No Content Yet',
       coverImg: post.image || null,
       status: post.status || '',
@@ -42,10 +38,7 @@ function CreatePostPage() {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      // setDisabled(true);
-      console.log({ values });
-      postApi.createPost(values);
-      // formik.resetForm();
+      postApi.editPost(values);
     }
   });
 
@@ -67,7 +60,6 @@ function CreatePostPage() {
     }
     selectedTags.push(tag);
     formik.values.tags.push(tag);
-    console.log(formik.values.tags);
   };
   const removeSelectedTag = (tag) => {
     if (selectedTags.length) {
@@ -102,6 +94,7 @@ function CreatePostPage() {
         onChange={formik.handleChange}
         className="p-5  border-2 border-black rounded-md w-full font-bold"
         value={formik.values.title}
+        placeholder={post.title}
       />
       <RichTextEditor writeContent={writeContent} />
       <TagsList
@@ -151,7 +144,7 @@ function CreatePostPage() {
         </button>
         <button
           className="relative inline-block mt-5 px-8 py-3 overflow-hidden border border-red-600 group focus:outline-none focus:ring "
-          type="button"
+          type="reset"
         >
           <span className="absolute inset-x-0  bottom-0 h-[2px] transition-all bg-red-600 group-hover:h-full group-active:bg-red-500" />
 
@@ -164,4 +157,4 @@ function CreatePostPage() {
   );
 }
 
-export default CreatePostPage;
+export default EditPostPage;

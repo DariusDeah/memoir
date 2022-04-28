@@ -76,24 +76,36 @@ class PostApi {
     }
   }
 
-  async createPost(postData) {
+  generatePostForm(postData) {
     try {
       const tags = [...new Set(postData.tags)];
+      let contentShort;
+      if (postData.content.length > 100) {
+        contentShort = postData.content.substring(0, 100);
+      }
+      contentShort = postData.content;
       const formData = new FormData();
       formData.append('title', postData.title);
       formData.append('content', postData.content);
-      formData.append('contentShort', postData.content.substring(0, 100));
+      formData.append('contentShort', contentShort);
       formData.append('coverImg', postData.coverImg);
       formData.append('status', postData.status);
       tags.forEach((element) => {
         formData.append('tags', element);
       });
+      return formData;
+    } catch (error) {
+      throw new Error(`error creating from data from: ${postData}`);
+    }
+  }
 
-      console.log(formData.values());
+  async createPost(postData) {
+    try {
+      const postFormData = this.generatePostForm(postData);
       const post = await API_V1({
         method: 'post',
         url: '/posts',
-        data: formData,
+        data: postFormData,
         headers: {
           'Content-Type': 'multipart/form-data',
           enctype: 'multipart/form-data'
@@ -143,7 +155,15 @@ class PostApi {
 
   async editPost(postId, postData) {
     try {
-      await API_V1.patch(`/posts/${postId}`, postData, {
+      const postFormData = this.generatePostForm(postData);
+      await API_V1({
+        method: 'post',
+        url: `/posts/${postId}`,
+        data: postFormData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          enctype: 'multipart/form-data'
+        },
         withCredentials: true
       });
     } catch (error) {
@@ -155,7 +175,7 @@ class PostApi {
     try {
       await API_V1.delete(`/posts/${postId}`, { withCredentials: true });
     } catch (error) {
-      console.log(error);
+      throw new Error('error deleting post');
     }
   }
 }

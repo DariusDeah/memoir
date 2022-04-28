@@ -44,7 +44,6 @@ function App() {
             <Route path="create-post" element={<CreatePostPage />} />
             <Route path="sign-auth" element={<AuthPage />} />
             <Route path="feature-request" element={<FeaturesRequestPage />} />
-            <Route path="posts/edit/:postId" element={<EditPostPage />} />
             <Route path="explore" element={<ExplorePage />} />
             <Route path="posts/:postId/edit" element={<EditPostPage />} />
 
