@@ -17,10 +17,30 @@ function Post() {
   const navigate = useNavigate();
   const account = useSelector((state) => state.account.account);
   const items = [
-    { id: 1, title: 'edit', action: 'editPost' },
-    { id: 2, title: 'delete', action: 'removePost' },
-    { id: 3, title: 'make private', action: 'makePostPrivate' },
-    { id: 4, title: 'make public', action: 'makePostPublic' }
+    {
+      id: 1,
+      title: 'edit',
+      action: 'editPost',
+      type: 'Edit'
+    },
+    {
+      id: 2,
+      title: 'delete',
+      action: 'removePost',
+      type: 'Delete'
+    },
+    {
+      id: 3,
+      title: 'make private',
+      action: 'makePostPrivate',
+      type: 'MakePrivate'
+    },
+    {
+      id: 4,
+      title: 'make public',
+      action: 'makePostPublic',
+      type: 'MakePublic'
+    }
   ];
   const deletePost = (postId) => {
     postApi.deletePost(postId);
@@ -71,7 +91,7 @@ function Post() {
                             editFunction={editPost}
                             makePrivateFunction={makePrivateFunction}
                             makePublicFunction={makePublicFunction}
-                            postId={post.id}
+                            itemId={post.id}
                           />
                         )}
                       </div>

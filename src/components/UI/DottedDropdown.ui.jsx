@@ -6,7 +6,7 @@ function DottedDropdown({
   items,
   editFunction,
   deleteFunction,
-  postId,
+  itemId,
   makePrivateFunction,
   makePublicFunction
 }) {
@@ -15,25 +15,36 @@ function DottedDropdown({
     e.preventDefault();
     setDropdownActive(!dropdownActive);
   };
-  const toggleFunction = (action) => {
+  const toggleFunction = (type, action) => {
     console.log({ action });
     if (!action) return;
 
     const selectFunction = {
-      editPost: () => {
-        editFunction(postId);
+      Edit: {
+        editPost: () => {
+          editFunction(itemId);
+        },
+        editComment: () => {
+          editFunction(itemId);
+        }
       },
-      removePost: () => {
-        deleteFunction(postId);
+      Delete: {
+        removePost: () => {
+          deleteFunction(itemId);
+        }
       },
-      makePostPrivate: () => {
-        makePrivateFunction(postId);
+      MakePrivate: {
+        makePostPrivate: () => {
+          makePrivateFunction(itemId);
+        }
       },
-      makePostPublic: () => {
-        makePublicFunction(postId);
+      MakePublic: {
+        makePostPublic: () => {
+          makePublicFunction(itemId);
+        }
       }
     };
-    selectFunction[action]();
+    selectFunction[type][action]();
   };
   return (
     <div className="relative inline-block ">
@@ -54,7 +65,7 @@ function DottedDropdown({
                 key={item.id}
                 type="button"
                 onClick={() => {
-                  toggleFunction(item.action);
+                  toggleFunction(item.type, item.action);
                 }}
               >
                 {item.title}

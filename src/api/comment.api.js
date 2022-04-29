@@ -23,7 +23,7 @@ class CommentAPI {
 
   async editComment(commentId, commentData) {
     try {
-      await API_V1.patch(`comments/${commentId}`, commentData, {
+      await API_V1.patch(`comments/${commentId}`, { content: commentData }, {
         withCredentials: true,
       });
     } catch (error) {

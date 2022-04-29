@@ -23,7 +23,7 @@ function Heart({ accountId, postId, likes }) {
           clipRule="evenodd"
         />
       </svg>
-      <p>{likes.length}</p>
+      <p>{likes && likes.length}</p>
     </>
   ) : (
     <>
