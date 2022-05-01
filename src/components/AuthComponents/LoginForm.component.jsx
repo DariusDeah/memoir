@@ -1,9 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { accountApi } from '../../api/Account.api';
 import { loginAccount } from '../../redux/actions/account.actions';
 import Spinner from '../UI/Icons/spinner.ui';
 import FailAlert from '../UI/FailAlert.ui';
@@ -26,7 +24,6 @@ function LoginForm(props) {
     validationSchema: schema,
     onSubmit: (values) => {
       dispatch(loginAccount(values));
-      console.log(values);
     }
   });
 
@@ -50,9 +47,7 @@ function LoginForm(props) {
           <label className={AuthStyles.label} htmlFor="loggingPassword">
             Password
           </label>
-          <a href="#" className={AuthStyles.label}>
-            Forgot Password?
-          </a>
+          <p className={AuthStyles.label}>Forgot Password?</p>
         </div>
 
         <input

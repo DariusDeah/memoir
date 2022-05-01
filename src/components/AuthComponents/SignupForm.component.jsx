@@ -1,9 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
-import { accountApi } from '../../api/Account.api';
 import { signupAccount } from '../../redux/actions/account.actions';
 import { AuthStyles } from './Auth.styles';
 
@@ -16,7 +14,7 @@ const schema = yup.object().shape({
     .oneOf([yup.ref('password')], 'password does not match')
 });
 
-function SignupForm(props) {
+function SignupForm({ toggleFunction }) {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -117,7 +115,7 @@ function SignupForm(props) {
         <span className="w-1/5 border-b  md:w-1/4" />
         <p
           className="text-xs text-gray-500 uppercase  hover:underline hover:cursor-pointer"
-          onClick={() => props.toggleFunction(false)}
+          onClick={() => toggleFunction(false)}
         >
           already a member? Sign in
         </p>

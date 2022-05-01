@@ -30,13 +30,13 @@ function AuthPage() {
 
         <GoogleOauthIcon />
         <div className="flex items-center justify-between mt-4">
-          <span className="w-1/5 border-b dark:border-gray-600 lg:w-1/4" />
+          <span className="w-1/5 border-b  lg:w-1/4" />
 
-          <p className="text-xs text-center text-gray-500 uppercase dark:text-gray-400 ">
+          <p className="text-xs text-center text-gray-500 uppercase  ">
             or login with email
           </p>
 
-          <span className="w-1/5 border-b dark:border-gray-400 lg:w-1/4" />
+          <span className="w-1/5 border-b lg:w-1/4" />
         </div>
         {isNewUser ? (
           <SignupForm toggleFunction={toggleNewUser} />
