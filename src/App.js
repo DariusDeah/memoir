@@ -11,7 +11,7 @@ import ExplorePage from './pages/ExplorePage';
 // import Modal from './components/UI/Modal.ui';
 import FeaturesRequestPage from './pages/FeaturesRequestPage';
 import CreatePostPage from './pages/CreatePostPage';
-import { getAccount } from './redux/actions/account.actions';
+import { getAccount, refreshAccount } from './redux/actions/account.actions';
 import EditPostPage from './pages/EditPostPage';
 import Collections from './components/Collections/ColectionsList.component';
 import Modal from './components/UI/Modal.ui';
@@ -22,7 +22,7 @@ function App() {
   const dispatch = useDispatch();
   const account = useSelector((state) => state.account.account);
   useEffect(() => {
-    dispatch(getAccount());
+    dispatch(refreshAccount());
     if (account) {
       dispatch(getCollections(account.id));
     }

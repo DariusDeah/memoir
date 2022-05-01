@@ -2,12 +2,11 @@ import { API_V1 } from '../config/axios.config';
 
 class AccountApi {
   async loginAccount(userData) {
-    // i would like to hash user password before sending it to api
     try {
-      const user = await API_V1.post('/login', userData, {
+      const res = await API_V1.post('/login', userData, {
         withCredentials: true
       });
-      return user.data;
+      return res.data;
     } catch (error) {
       throw new Error('error logging in user');
     }
@@ -15,21 +14,21 @@ class AccountApi {
 
   async refreshAccount() {
     try {
-      const user = await API_V1.get('/refresh', {
+      const res = await API_V1.get('/refresh', {
         withCredentials: true
       });
-      return user;
+      return res.data;
     } catch (error) {
       throw new Error('error refreshing user');
     }
   }
 
-  async creatAccount(userData) {
+  async signupAccount(userData) {
     try {
       const res = await API_V1.post('/sign-up', userData, {
         withCredentials: true
       });
-      return res.data.user;
+      return res.data;
     } catch (error) {
       throw new Error('error registering user');
     }

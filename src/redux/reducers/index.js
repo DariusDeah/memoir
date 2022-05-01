@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import posts from './posts';
-import account from './account.reducer';
+import account from '../slices/account.slice';
 import user from './user.reducer';
 import collections from './collections.reducer';
 // import user from './user'

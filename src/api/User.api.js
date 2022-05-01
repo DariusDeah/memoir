@@ -21,7 +21,7 @@ class UserApi {
       userData.name !== undefined && formData.append('name', userData.name);
       userData.email !== undefined && formData.append('email', userData.email);
       userData.bio !== undefined && formData.append('bio', userData.bio);
-      await API_V1({
+      const res = await API_V1({
         method: 'patch',
         url: `/users/${userId}`,
         data: formData,
@@ -31,6 +31,7 @@ class UserApi {
         },
         withCredentials: true
       });
+      return res.data;
     } catch (error) {
       throw new Error('error updating user');
     }

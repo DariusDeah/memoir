@@ -1,8 +1,9 @@
 import React from 'react';
+import { UIstyles } from './UI.syles';
 
-function SuccessAlert({ title, content }) {
+function SuccessAlert({ title, message }) {
   return (
-    <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+    <div className="flex w-full max-w-sm z-50 mx-auto overflow-hidden h-28 bg-white rounded-lg shadow-md ">
       <div className="flex items-center justify-center w-12 bg-emerald-500">
         <svg
           className="w-6 h-6 text-white fill-current"
@@ -18,7 +19,7 @@ function SuccessAlert({ title, content }) {
           <span className="font-semibold text-emerald-500 dark:text-emerald-400">
             {title}
           </span>
-          <p className="text-sm text-gray-600 dark:text-gray-200">{content}</p>
+          <p className="text-sm text-gray-600">{message}</p>
         </div>
       </div>
     </div>

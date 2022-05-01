@@ -2,16 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { accountApi } from '../../api/Account.api';
+import { logoutAccount } from '../../redux/actions/account.actions';
 import { getCollections } from '../../redux/actions/collections.actions';
+import Alert from '../UI/Alert.ui';
 import Avatar from '../UI/Avatar.ui';
+import FailAlert from '../UI/FailAlert.ui';
 import CollectionIcon from '../UI/Icons/Collection.icon';
+import Spinner from '../UI/Icons/spinner.ui';
 import Modal from '../UI/Modal.ui';
+import SuccessAlert from '../UI/SuccessAlert.ui';
 
 function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // @ts-ignore
-  const account = useSelector((state) => state.account.account);
-  console.log(account);
+  const { account, pending, error, loginError } = useSelector(
+    (state) => state.account
+  );
+  const state = useSelector((state) => state);
   const [modalActive, setModalActive] = useState(false);
   const dispatch = useDispatch();
 
@@ -27,17 +34,21 @@ function Nav() {
     setModalActive(!modalActive);
     console.log(modalActive);
   };
-  useEffect(() => {
-    if (account) {
-      dispatch(getCollections(account.id));
-    }
-  }, [account]);
-
+  // useEffect(() => {
+  //   dispatch(getCollections(account.id));
+  // }, [account]);
+  if (loginError) {
+    console.log(error);
+  }
   const logout = () => {
-    accountApi.logoutAccount();
+    dispatch(logoutAccount());
   };
   return (
     <div className=" px-4 py-5 mx-auto  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 ">
+      {loginError && <Alert title={error.name} message={error.message} />}
+      {account.auth && !loginError && !pending && (
+        <Alert title="Success" message="Login Successful" />
+      )}
       <div className="relative flex grid items-center grid-cols-2 lg:grid-cols-3">
         <ul className="flex items-center hidden space-x-8 lg:flex">
           <Link to="explore">
@@ -66,10 +77,8 @@ function Nav() {
                 confirmRoute="sign-auth"
                 showModal
                 title="Not So Fast.."
-                content={
-                  "You must be logged in to create a post, \
+                content="You must be logged in to create a post, \
                   if you're a new user then create an account now and join the fun! "
-                }
                 confirmOption="Create account!"
                 closeModal={(e) => closeModal(e)}
               />
@@ -105,11 +114,11 @@ function Nav() {
           className="inline-flex items-center lg:mx-auto"
         >
           <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
-            Memoir <span className="red-500">.</span>
+            Memoir <span className="text-red-500">.</span>
           </span>
         </a>
         <ul className="flex items-center hidden ml-auto space-x-8 lg:flex">
-          {account ? (
+          {account && account.auth && !pending && (
             <>
               <li>
                 <p className="font-semibold">@{account.name}</p>
@@ -134,7 +143,8 @@ function Nav() {
                 <CollectionIcon />
               </li>
             </>
-          ) : (
+          )}
+          {error && !account.auth && (
             <li>
               <Link to="sign-auth">
                 <p
@@ -147,6 +157,7 @@ function Nav() {
               </Link>
             </li>
           )}
+          {pending && <Spinner />}
         </ul>
         <div className="ml-auto lg:hidden">
           <button

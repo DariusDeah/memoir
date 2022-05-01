@@ -1,8 +1,10 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { accountApi } from '../../api/Account.api';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useDispatch } from 'react-redux';
+import { accountApi } from '../../api/Account.api';
+import { signupAccount } from '../../redux/actions/account.actions';
 
 const schema = yup.object().shape({
   name: yup.string().required('Name is required'),
@@ -14,6 +16,7 @@ const schema = yup.object().shape({
 });
 
 function SignupForm(props) {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -23,15 +26,7 @@ function SignupForm(props) {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      const creatUser = async () => {
-        const user = await accountApi.creatAccount(values);
-        console.log({ values });
-        if (user) {
-          // TODO trigger sucess snack bar when user is sucessfully created
-          console.log(user);
-        }
-      };
-      creatUser();
+      dispatch(signupAccount(values));
     }
   });
   return (
@@ -133,7 +128,7 @@ function SignupForm(props) {
       </div>
 
       <div className="flex items-center justify-between mt-4">
-        <span className="w-1/5 border-b  md:w-1/4"></span>
+        <span className="w-1/5 border-b  md:w-1/4" />
         <p
           className="text-xs text-gray-500 uppercase  hover:underline hover:cursor-pointer"
           onClick={() => props.toggleFunction(false)}
@@ -141,7 +136,7 @@ function SignupForm(props) {
           already a member? <span className="underline">sign in</span>
         </p>
 
-        <span className="w-1/5 border-b  md:w-1/4"></span>
+        <span className="w-1/5 border-b  md:w-1/4" />
       </div>
     </form>
   );

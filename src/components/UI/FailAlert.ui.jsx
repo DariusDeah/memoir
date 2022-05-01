@@ -1,11 +1,12 @@
 import React from 'react';
+import { UIstyles } from './UI.syles';
 
-function FailAlert({ title, content }) {
+function FailAlert({ title, message }) {
   return (
-    <div className="flex w-full max-w-sm z-50 mx-auto overflow-hidden bg-white rounded-lg shadow-md ">
+    <div className="flex w-full max-w-sm z-50 mx-auto overflow-hidden h-28 bg-white rounded-lg shadow-md ">
       <div className="flex items-center justify-center w-12 bg-red-500">
         <svg
-          className="w-6 h-6 text-white fill-current"
+          className="w-12 h-12 text-white fill-current"
           viewBox="0 0 40 40"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -17,7 +18,7 @@ function FailAlert({ title, content }) {
           <span className="font-bold text-red-500 dark:text-red-400">
             {title}
           </span>
-          <p className="text-md text-gray-800">{content}</p>
+          <p className="text-md text-gray-800">{message}</p>
         </div>
       </div>
     </div>

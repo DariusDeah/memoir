@@ -20,4 +20,5 @@ const reducer = (account = {}, action) => {
       return account;
   }
 };
+
 export default reducer;

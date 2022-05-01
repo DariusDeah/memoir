@@ -2,11 +2,15 @@ import React from 'react';
 import { Formik, useFormik } from 'formik';
 import * as yup from 'yup';
 import PropTypes from 'prop-types';
-import { userApi } from '../../api/User.api';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
+import { updateUser } from '../../redux/actions/account.actions';
 
 // TODO switch user to account
 function ProfileInfo({ user }) {
   console.log({ user });
+  const { userId } = useParams();
+  const dispatch = useDispatch();
   const schema = yup.object().shape({
     name: yup.string(),
     email: yup.string().email('invalid email'),
@@ -24,7 +28,7 @@ function ProfileInfo({ user }) {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      userApi.updateUser(user.id, values);
+      dispatch(updateUser(userId, values));
     }
   });
 
