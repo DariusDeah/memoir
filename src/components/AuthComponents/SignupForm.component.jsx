@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
 import { accountApi } from '../../api/Account.api';
 import { signupAccount } from '../../redux/actions/account.actions';
+import { AuthStyles } from './Auth.styles';
 
 const schema = yup.object().shape({
   name: yup.string().required('Name is required'),
@@ -32,15 +33,12 @@ function SignupForm(props) {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="mt-4">
-        <label
-          className="block mb-2 text-sm font-medium text-gray-600 "
-          htmlFor="name"
-        >
+        <label className={AuthStyles.label} htmlFor="name">
           Name
         </label>
         <input
           id="name"
-          className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md    focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+          className={AuthStyles.input}
           type="text"
           required
           value={formik.values.name}
@@ -50,15 +48,12 @@ function SignupForm(props) {
       </div>
 
       <div className="mt-4">
-        <label
-          className="block mb-2 text-sm font-medium text-gray-600 "
-          htmlFor="email"
-        >
+        <label className={AuthStyles.label} htmlFor="email">
           Email Address
         </label>
         <input
           id="email"
-          className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md    focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+          className={AuthStyles.input}
           type="email"
           required
           // error={errors?.email}
@@ -70,17 +65,14 @@ function SignupForm(props) {
 
       <div className="mt-4">
         <div className="flex justify-between">
-          <label
-            className="block mb-2 text-sm font-medium text-gray-600 "
-            htmlFor="password"
-          >
+          <label className={AuthStyles.label} htmlFor="password">
             Password
           </label>
         </div>
 
         <input
           id="password"
-          className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md    focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+          className={AuthStyles.input}
           type="password"
           required
           value={formik.values.password}
@@ -92,17 +84,14 @@ function SignupForm(props) {
       </div>
       <div className="mt-4">
         <div className="flex justify-between">
-          <label
-            className="block mb-2 text-sm font-medium text-gray-600 "
-            htmlFor="passwordConfirm"
-          >
+          <label className={AuthStyles.label} htmlFor="passwordConfirm">
             Confirm Password
           </label>
         </div>
 
         <input
           required
-          className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md    focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+          className={AuthStyles.input}
           id="passwordConfirm"
           type="password"
           value={formik.values.passwordConfirm}
@@ -119,10 +108,7 @@ function SignupForm(props) {
       </div>
 
       <div className="mt-8">
-        <button
-          className="w-full px-4 py-2 tracking-wide bg-gray-800 text-white transition-colors duration-200 transform hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-          type="submit"
-        >
+        <button className={AuthStyles.button} type="submit">
           Register
         </button>
       </div>
@@ -133,7 +119,7 @@ function SignupForm(props) {
           className="text-xs text-gray-500 uppercase  hover:underline hover:cursor-pointer"
           onClick={() => props.toggleFunction(false)}
         >
-          already a member? <span className="underline">sign in</span>
+          already a member? Sign in
         </p>
 
         <span className="w-1/5 border-b  md:w-1/4" />
