@@ -32,5 +32,12 @@ export const AuthStyles = {
      ${button.space}
      `,
   input: `${input.color} ${input.size} ${input.animation} ${input.pseudoEffects} ${input.space} ${input.layout}`,
-  label: `${label.color} ${label.size} ${label.animation},${label.pseudoEffects} ${label.space} ${label.layout}`
+  label: `
+  ${label.color}
+   ${label.size} 
+   ${label.animation}
+   ${label.pseudoEffects}
+    ${label.space}
+     ${label.layout}
+     `
 };

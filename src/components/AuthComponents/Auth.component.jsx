@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import GoogleOauthIcon from './GoogleOauthIcon.component';
 import LoginForm from './LoginForm.component';
 import SignupForm from './SignupForm.component';
+import useToggleNewUser from './toggleNewUser.hook';
 
 function AuthPage() {
-  const [isNewUser, setIsNewUser] = useState(false);
-
-  const toggleNewUser = (bool) => {
-    setIsNewUser(bool);
-  };
+  const { isNewUser, toggleNewUser } = useToggleNewUser();
   return (
     <div className="flex max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg  lg:max-w-4xl">
       <div className="hidden bg-cover lg:block lg:w-1/2">

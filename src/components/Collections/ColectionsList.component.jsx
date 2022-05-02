@@ -4,7 +4,6 @@ import { useFormik } from 'formik';
 import { Link } from 'react-router-dom';
 import { collectionApi } from '../../api/collections.api';
 import DeleteIcon from '../UI/Icons/Delete.icon';
-import EditIcon from '../UI/Icons/Edit.icon';
 
 const schema = yup.object().shape({
   name: yup.string().required()

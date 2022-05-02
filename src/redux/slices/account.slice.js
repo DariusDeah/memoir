@@ -7,15 +7,9 @@ import {
 export const accountSlice = createSlice({
   name: 'account',
   initialState: {
-    account: {
-      name: '',
-      email: '',
-      photo: '',
-      id: '',
-      auth: false,
-    },
-    logginError: null,
-    pending: null,
+    account: {},
+    loggedIn: false,
+    pending: false,
     error: false
   },
   reducers: {},
@@ -31,12 +25,11 @@ export const accountSlice = createSlice({
       state.account.photo = action.payload.photo;
       state.account.email = action.payload.email;
       state.account.id = action.payload._id;
-      state.account.auth = true;
     },
-    [refreshAccount.rejected]: (state) => {
-      state.pending = null;
-      state.error = true;
-      state.account.auth = false;
+    [refreshAccount.rejected]: (state, action) => {
+      state.pending = false;
+      state.error = action.error;
+      state.account = null;
     },
 
     [logoutAccount.pending]: (state) => {
@@ -58,7 +51,6 @@ export const accountSlice = createSlice({
       state.error = false;
     },
     [loginAccount.fulfilled]: (state, action) => {
-      state.account.auth = true;
       state.pending = false;
       state.error = false;
       state.account.name = action.payload.name;
@@ -68,7 +60,6 @@ export const accountSlice = createSlice({
     },
     [loginAccount.rejected]: (state, action) => {
       state.pending = false;
-      state.auth = false;
       state.loginError = true;
       state.error = action.error;
     },
@@ -79,16 +70,13 @@ export const accountSlice = createSlice({
     [signupAccount.fulfilled]: (state, action) => {
       state.pending = false;
       state.error = false;
-      state.account.auth = true;
       state.account.name = action.payload.name;
       state.account.photo = action.payload.photo;
       state.account.email = action.payload.email;
       state.account.id = action.payload._id;
     },
     [signupAccount.rejected]: (state, action) => {
-      state.auth = false;
       state.pending = false;
-      state.auth = false;
       state.error = action.error;
     },
     [updateUser.pending]: (state) => {

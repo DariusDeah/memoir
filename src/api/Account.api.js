@@ -8,7 +8,7 @@ class AccountApi {
       });
       return res.data;
     } catch (error) {
-      throw new Error('error logging in user');
+      throw new Error('Incorrect email or password! ');
     }
   }
 

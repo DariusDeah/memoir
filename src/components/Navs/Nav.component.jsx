@@ -15,10 +15,7 @@ import SuccessAlert from '../UI/SuccessAlert.ui';
 function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // @ts-ignore
-  const { account, pending, error, loginError } = useSelector(
-    (state) => state.account
-  );
-  const state = useSelector((state) => state);
+  const { account, pending, error } = useSelector((state) => state.account);
   const [modalActive, setModalActive] = useState(false);
   const dispatch = useDispatch();
 
@@ -26,29 +23,17 @@ function Nav() {
     event.preventDefault();
     if (account) return;
     setModalActive(true);
-    console.log(modalActive);
   };
   const closeModal = (event) => {
     event.preventDefault();
-    console.log('works');
     setModalActive(!modalActive);
-    console.log(modalActive);
   };
-  // useEffect(() => {
-  //   dispatch(getCollections(account.id));
-  // }, [account]);
-  if (loginError) {
-    console.log(error);
-  }
   const logout = () => {
     dispatch(logoutAccount());
   };
   return (
     <div className=" px-4 py-5 mx-auto  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 ">
-      {loginError && <Alert title={error.name} message={error.message} />}
-      {account.auth && !loginError && !pending && (
-        <Alert title="Success" message="Login Successful" />
-      )}
+      <Alert title={error.name} message={error.message} />
       <div className="relative flex grid items-center grid-cols-2 lg:grid-cols-3">
         <ul className="flex items-center hidden space-x-8 lg:flex">
           <Link to="explore">
@@ -118,7 +103,7 @@ function Nav() {
           </span>
         </a>
         <ul className="flex items-center hidden ml-auto space-x-8 lg:flex">
-          {account && account.auth && !pending && (
+          {account && !pending && (
             <>
               <li>
                 <p className="font-semibold">@{account.name}</p>
@@ -144,7 +129,7 @@ function Nav() {
               </li>
             </>
           )}
-          {error && !account.auth && (
+          {error && (
             <li>
               <Link to="sign-auth">
                 <p

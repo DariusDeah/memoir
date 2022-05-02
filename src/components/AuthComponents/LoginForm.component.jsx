@@ -13,9 +13,7 @@ const schema = yup.object().shape({
 });
 function LoginForm(props) {
   const dispatch = useDispatch();
-  const { account, error, pending } = useSelector(
-    (state) => state.account.account
-  );
+  const { pending } = useSelector((state) => state.account);
   const formik = useFormik({
     initialValues: {
       email: '',

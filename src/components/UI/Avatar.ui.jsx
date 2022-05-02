@@ -15,7 +15,7 @@ function Avatar({ photo, id, styles }) {
 }
 Avatar.propTypes = {
   photo: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   styles: PropTypes.string.isRequired
 };
 

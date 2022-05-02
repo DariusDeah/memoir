@@ -23,9 +23,9 @@ function App() {
   const account = useSelector((state) => state.account.account);
   useEffect(() => {
     dispatch(refreshAccount());
-    if (account) {
-      dispatch(getCollections(account.id));
-    }
+    // if (account) {
+    //   dispatch(getCollections(account.id));
+    // }
   }, []);
 
   return (
