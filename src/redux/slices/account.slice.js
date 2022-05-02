@@ -8,7 +8,7 @@ export const accountSlice = createSlice({
   name: 'account',
   initialState: {
     account: {},
-    loggedIn: false,
+    loggedIn: null,
     pending: false,
     error: false
   },
@@ -21,6 +21,7 @@ export const accountSlice = createSlice({
     [refreshAccount.fulfilled]: (state, action) => {
       state.pending = false;
       state.error = false;
+      state.loggedIn = true;
       state.account.name = action.payload.name;
       state.account.photo = action.payload.photo;
       state.account.email = action.payload.email;
@@ -29,7 +30,8 @@ export const accountSlice = createSlice({
     [refreshAccount.rejected]: (state, action) => {
       state.pending = false;
       state.error = action.error;
-      state.account = null;
+      state.account = {};
+      state.loggedIn = false;
     },
 
     [logoutAccount.pending]: (state) => {
@@ -39,11 +41,13 @@ export const accountSlice = createSlice({
     [logoutAccount.fulfilled]: (state, action) => {
       state.pending = false;
       state.error = false;
-      state.account = null;
+      state.loggedIn = false;
+      state.account = {};
     },
     [logoutAccount.rejected]: (state) => {
       state.pending = false;
       state.error = true;
+      state.loggedIn = false;
     },
 
     [loginAccount.pending]: (state) => {
@@ -53,6 +57,7 @@ export const accountSlice = createSlice({
     [loginAccount.fulfilled]: (state, action) => {
       state.pending = false;
       state.error = false;
+      state.loggedIn = true;
       state.account.name = action.payload.name;
       state.account.photo = action.payload.photo;
       state.account.email = action.payload.email;
@@ -82,11 +87,11 @@ export const accountSlice = createSlice({
     [updateUser.pending]: (state) => {
       state.pending = true;
       state.error = false;
-      state.logginError = false;
     },
     [updateUser.fulfilled]: (state, action) => {
       state.pending = false;
       state.error = false;
+      state.loggedIn = true;
       state.account.name = action.payload.name;
       state.account.photo = action.payload.photo;
       state.account.email = action.payload.email;
