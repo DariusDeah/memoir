@@ -24,9 +24,10 @@ class CollectionApi {
 
   async createCollection(collectionData) {
     try {
-      await API_V1.post('/collections', collectionData, {
+      const res = await API_V1.post('/collections', collectionData, {
         withCredentials: true,
       });
+      return res.data;
     } catch (error) {
       throw new Error('error creating collection');
     }
@@ -46,7 +47,8 @@ class CollectionApi {
 
   async removeCollection(collectionId) {
     try {
-      await API_V1.delete(`collections/${collectionId}`, { withCredentials: true });
+      const res = await API_V1.delete(`collections/${collectionId}`, { withCredentials: true });
+      return res.data;
     } catch (error) {
       throw new Error('Error deleting collection');
     }

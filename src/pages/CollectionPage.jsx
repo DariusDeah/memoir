@@ -4,29 +4,31 @@ import { useParams } from 'react-router-dom';
 import CollectionPosts from '../components/Posts/CollectionPosts.component';
 import Post from '../components/Posts/Post.component';
 import Avatar from '../components/UI/Avatar.ui';
-import { getCollectionById } from '../redux/actions/collection.action';
+import { getCollectionById } from '../redux/actions/collections.actions';
 
 function CollectionPage() {
-  const { collectionId } = useParams();
-  const collection = useSelector((state) => state.collection.collection);
-  console.log(collection);
   const dispatch = useDispatch();
+  const { collectionId } = useParams();
+  const { selectedCollection, error, pending, collectionData } = useSelector(
+    (state) => state.collections
+  );
   useEffect(() => {
     dispatch(getCollectionById(collectionId));
   }, []);
 
   return (
-    collection && (
+    selectedCollection &&
+    collectionData && (
       <>
         <Avatar
-          photo={collection.creator.photo}
-          id={collection.creator._id}
+          photo={selectedCollection.creator.photo}
+          id={selectedCollection.creator._id}
           styles="w-12 h-12"
         />
-        <h1>{collection.name}</h1>
+        <h1>{selectedCollection.name}</h1>
         Posts:
-        <h1>{collection.posts.length}</h1>
-        <CollectionPosts posts={collection.posts} />
+        <h1>{selectedCollection.posts.length}</h1>
+        <CollectionPosts posts={selectedCollection.posts} />
       </>
     )
   );

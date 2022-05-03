@@ -17,7 +17,7 @@ function PostLayoutSkeleton() {
         <div className="flex flex-col space-y-4 md:space-y-0 md:space-x-6 md:flex-row ">
           {/* <img src={post.authorPhoto} alt="" className="" /> */}
           <div
-            className={`self-center flex-shrink-0 w-24 h-24 border rounded-full md:justify-self-start border-coolGray-300 ${defaultSkeleton.animation} ${defaultSkeleton.color}`}
+            className={`self-center flex-shrink-0 w-24 h-24  rounded-full md:justify-self-start border-coolGray-300 ${defaultSkeleton.animation} ${defaultSkeleton.color}`}
           />
           <div className="flex flex-col text-start sm:text-start">
             <div

@@ -8,6 +8,7 @@ export const accountSlice = createSlice({
   name: 'account',
   initialState: {
     account: {},
+    collections: [],
     loggedIn: null,
     pending: false,
     error: false
@@ -101,7 +102,8 @@ export const accountSlice = createSlice({
     [updateUser.rejected]: (state, action) => {
       state.pending = false;
       state.error = action.error;
-    }
+    },
+
   }
 });
 export default accountSlice.reducer;

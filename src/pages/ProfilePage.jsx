@@ -11,28 +11,24 @@ import { getUser } from '../redux/actions/user.actions';
 import Comment from '../components/Comments/Comment.component';
 import { userApi } from '../api/User.api';
 import { getUserFollowers } from '../redux/actions/followers.actions';
-import { getCollections } from '../redux/actions/collections.actions';
+import { getUserCollections } from '../redux/actions/collections.actions';
 import Collections from '../components/Collections/ColectionsList.component';
-import { getProfileCollections } from '../redux/actions/profileCollections.actions';
 
 function ProfilePage() {
   const [selectedTab, setSelectedTab] = useState(2);
   console.log({ selectedTab });
   const dispatch = useDispatch();
   const { userId } = useParams();
-  const { account } = useSelector((state) => state.account);
+  const { account, loggedIn } = useSelector((state) => state.account);
   const userPosts = useSelector((state) => state.posts.posts);
   const { user } = useSelector((state) => state.user);
   const comments = useSelector((state) => state.comments.comments);
   const userFollowers = useSelector((state) => state.followers.followers);
-  const collections = useSelector(
-    (state) => state.profileCollections.collections
-  );
-  console.log(userFollowers);
+  const { userCollections } = useSelector((state) => state.collections);
   const fetchUserPosts = () => {
     userId && dispatch(getPosts(`?creatorId=${userId}`));
   };
-
+  console.log({ userCollections });
   const fetchUserDrafts = () => {
     dispatch(getDraftPosts());
   };
@@ -47,7 +43,7 @@ function ProfilePage() {
     userApi.getUserFollowings(userId);
   };
   const fetchUserCollections = () => {
-    dispatch(getProfileCollections(userId));
+    dispatch(getUserCollections(userId));
   };
   const handleTabChange = (e, id) => {
     e.preventDefault();
@@ -101,14 +97,14 @@ function ProfilePage() {
             </h1>
             {/* <p>{user.website}</p> */}
             <p>{user.bio}</p>
-            {userPosts && userFollowers && collections && (
+            {userPosts && userFollowers && userCollections && (
               <ProfileStats
                 userPostsLength={userPosts.length}
                 userFollowersLength={userFollowers.length}
-                userCollectionsLength={collections.length}
+                userCollectionsLength={userCollections.length}
               />
             )}
-            {account.id !== user.id && (
+            {loggedIn && account.id !== user.id && (
               <div className="inline-flex items-center -space-x-px text-xs rounded-md">
                 {userFollowers &&
                 userFollowers.filter((x) => x.followerId === account.id)
@@ -169,7 +165,7 @@ function ProfilePage() {
               userPosts={userPosts}
               user={user}
               commentData={comments}
-              collections={collections}
+              collections={userCollections}
             />
           </div>
         </>

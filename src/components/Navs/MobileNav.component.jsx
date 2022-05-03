@@ -126,7 +126,11 @@ function MobileNav({
                 {account && loggedIn ? (
                   <li>
                     <p className="font-semibold">@{account.name}</p>
-                    <Avatar photo={account.photo} id={account.id} />
+                    <Avatar
+                      photo={account.photo}
+                      id={account.id}
+                      styles="w-12 h-12"
+                    />
                   </li>
                 ) : (
                   <li>

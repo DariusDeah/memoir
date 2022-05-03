@@ -1,19 +1,26 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { collectionApi } from '../../api/collections.api';
 import { Collection_Action_Types } from '../constants/action-types';
 
-export const getCollections = (userId) => async (dispatch) => {
-  try {
-    const data = await collectionApi.getUserCollections(userId);
-    dispatch({ type: Collection_Action_Types.Fetch_Collection, payload: data });
-  } catch (error) {
-    console.log(error);
-  }
-};
-export const createCollections = (collectionData) => async (dispatch) => {
-  try {
-    await collectionApi.createCollection(collectionData);
-    dispatch({ type: Collection_Action_Types.SET_COLLECTION, payload: collectionData });
-  } catch (error) {
-    console.log(error);
-  }
-};
+export const getAccountCollections = createAsyncThunk('account/collections', async (accountId) => {
+  const { data } = await collectionApi.getUserCollections(accountId);
+  return data;
+});
+export const getUserCollections = createAsyncThunk('user/collections', async (userId) => {
+  const { data } = await collectionApi.getUserCollections(userId);
+  return data;
+});
+
+export const getCollectionById = createAsyncThunk('collections/id', async (collectionId) => {
+  const { data } = await collectionApi.getCollectionById(collectionId);
+  return data;
+});
+export const createCollection = createAsyncThunk('collections/create', async (collectionData) => {
+  const { data } = await collectionApi.createCollection(collectionData);
+  return data;
+});
+
+export const deleteCollection = createAsyncThunk('collections/delete', async (collectionId) => {
+  const { data } = await collectionApi.removeCollection(collectionId);
+  return data;
+});

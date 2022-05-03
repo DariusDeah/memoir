@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutAccount } from '../../redux/actions/account.actions';
-import { getCollections } from '../../redux/actions/collections.actions';
+import { getAccountCollections } from '../../redux/actions/collections.actions';
 
 function useNav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,7 +25,7 @@ function useNav() {
     dispatch(logoutAccount());
   };
   useEffect(() => {
-    loggedIn && dispatch(getCollections(account.id));
+    loggedIn && dispatch(getAccountCollections(account.id));
   }, [account]);
 
   return {

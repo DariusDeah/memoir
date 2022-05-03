@@ -6,13 +6,12 @@ import CreateCollection from '../../../Forms/CreateCollection.form';
 
 function CollectionIcon() {
   const [modalActive, setModalActive] = useState(false);
-  const collections = useSelector((state) => state.collections.collections);
-
-  const { account, pending, error, loggedIn } = useSelector(
-    (state) => state.account
+  const { accountCollections, pending, error } = useSelector(
+    (state) => state.collections
   );
+
+  const { account, loggedIn } = useSelector((state) => state.account);
   // const collections = false;
-  console.log(collections);
   const closeModal = (event) => {
     event.preventDefault();
     setModalActive(!modalActive);
@@ -28,9 +27,9 @@ function CollectionIcon() {
           content={undefined}
           confirmOption={undefined}
         >
-          {collections && collections.length ? (
+          {loggedIn && accountCollections ? (
             <Collections
-              collections={collections}
+              collections={accountCollections}
               user={account}
               loggedIn={loggedIn}
             />

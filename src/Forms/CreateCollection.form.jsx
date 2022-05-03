@@ -1,20 +1,23 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
 import { collectionApi } from '../api/collections.api';
+import { createCollection } from '../redux/actions/collections.actions';
 
 const schema = yup.object().shape({
   name: yup.string().required()
 });
 
 function CreateCollection() {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       name: ''
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      collectionApi.createCollection(values);
+      dispatch(createCollection(values));
     }
   });
 
