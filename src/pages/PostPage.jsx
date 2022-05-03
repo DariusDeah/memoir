@@ -11,7 +11,6 @@ import { getPost } from '../redux/actions/posts.actions';
 
 function PostPage() {
   const [createComment, setCreateComment] = useState(false);
-  // const [replyComment, setReplyComment] = useState(false);
   const comments = useSelector((state) => state.comments.comments);
   const likes = useSelector((state) => state.likes.likes);
   console.log({ likes });

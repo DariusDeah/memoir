@@ -1,28 +1,27 @@
 import { API_V1 } from '../config/axios.config';
 
 class PostApi {
-  createPostDTO(post) {
-    if (!post) {
-      throw new Error('specify post to generate dto');
-    }
-    console.log(post.payload);
+  // createPostDTO(post) {
+  //   if (!post) {
+  //     throw new Error('specify post to generate dto');
+  //   }
 
-    const postDto = {
-      title: post.title,
-      content: post.content,
-      image: post.coverImg,
-      authorName: post.creator.name,
-      authorPhoto: post.creator.photo,
-      authorId: post.creatorId,
-      // eslint-disable-next-line no-underscore-dangle
-      id: post._id,
-      tags: post.tags,
-      authorBio: post.creator.bio,
-      createdDate: new Date(post.createdAt).toDateString(),
-      status: post.status
-    };
-    return { ...postDto };
-  }
+  //   const postDto = {
+  //     title: post.title,
+  //     content: post.content,
+  //     image: post.coverImg,
+  //     authorName: post.creator.name,
+  //     authorPhoto: post.creator.photo,
+  //     authorId: post.creatorId,
+  //     // eslint-disable-next-line no-underscore-dangle
+  //     id: post._id,
+  //     tags: post.tags,
+  //     authorBio: post.creator.bio,
+  //     createdDate: new Date(post.createdAt).toDateString(),
+  //     status: post.status
+  //   };
+  //   return { ...postDto };
+  // }
 
   async getPostComments(postId) {
     try {
@@ -126,7 +125,7 @@ class PostApi {
       const res = await API_V1.get(`/posts${query}`);
       return res.data;
     } catch (error) {
-      return new Error('error getting posts');
+      throw new Error('error getting posts');
     }
   }
 
@@ -135,15 +134,9 @@ class PostApi {
       const res = await API_V1.get(`/posts/${postId}`, {
         withCredentials: true
       });
-      if (!res.data) {
-        // TODO send user an alert that post was not found
-        console.log('post not found');
-      }
-      console.log(res.data.post);
-      const post = this.createPostDTO(res.data.post);
-      return post;
+      return res.data;
     } catch (error) {
-      throw new Error('error feting post');
+      throw new Error('error fetching post');
     }
   }
 

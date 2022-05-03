@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 // import { accountApi } from '../../api/Account.api';
 import {
   loginAccount, logoutAccount, refreshAccount, signupAccount, updateUser
@@ -53,6 +53,7 @@ export const accountSlice = createSlice({
     [loginAccount.pending]: (state) => {
       state.pending = true;
       state.error = false;
+      state.loggedIn = false;
     },
     [loginAccount.fulfilled]: (state, action) => {
       state.pending = false;
@@ -103,5 +104,4 @@ export const accountSlice = createSlice({
     }
   }
 });
-export const { } = accountSlice.actions;
 export default accountSlice.reducer;

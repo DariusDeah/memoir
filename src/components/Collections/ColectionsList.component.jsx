@@ -9,7 +9,7 @@ const schema = yup.object().shape({
   name: yup.string().required()
 });
 
-function Collections({ collections, user, addToCollection }) {
+function Collections({ collections, user, addToCollection, loggedIn }) {
   const deleteCollection = async (collectionId) => {
     await collectionApi.removeCollection(collectionId);
   };
@@ -26,7 +26,7 @@ function Collections({ collections, user, addToCollection }) {
 
   return (
     <article className=" rounded-xl">
-      {user && (
+      {loggedIn && (
         <>
           <div className="flex items-center border-b-2 border-black mb-2">
             <img

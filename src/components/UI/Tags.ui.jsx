@@ -3,7 +3,6 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 
 function Tags({ tags }) {
-  console.log({ tags });
   return (
     <>
       {tags &&

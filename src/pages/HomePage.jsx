@@ -6,7 +6,6 @@ import { getPosts } from '../redux/actions/posts.actions';
 
 function HomePage() {
   const dispatch = useDispatch();
-  // const following = "6249e75112e1dbd4016c0cde";
   useEffect(() => {
     dispatch(getPosts(``));
   }, [dispatch]);

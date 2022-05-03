@@ -8,7 +8,7 @@ import CreateCollection from '../../../Forms/CreateCollection.form';
 function Bookmark({ postId }) {
   const [modalActive, setModalActive] = useState(false);
   const collections = useSelector((state) => state.collections.collections);
-  const account = useSelector((state) => state.account.account);
+  const { account, loggedIn } = useSelector((state) => state.account);
   const closeModal = (event) => {
     event.preventDefault();
     setModalActive(!modalActive);
@@ -31,6 +31,7 @@ function Bookmark({ postId }) {
               collections={collections}
               user={account}
               addToCollection={addPostToCollection}
+              loggedIn={loggedIn}
             />
           ) : (
             <div className="text-center">

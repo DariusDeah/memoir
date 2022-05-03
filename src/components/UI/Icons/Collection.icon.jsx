@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useFormik } from 'formik';
 import Collections from '../../Collections/ColectionsList.component';
 import Modal from '../Modal.ui';
 import CreateCollection from '../../../Forms/CreateCollection.form';
@@ -9,14 +8,14 @@ function CollectionIcon() {
   const [modalActive, setModalActive] = useState(false);
   const collections = useSelector((state) => state.collections.collections);
 
-  const account = useSelector((state) => state.account.account);
+  const { account, pending, error, loggedIn } = useSelector(
+    (state) => state.account
+  );
   // const collections = false;
   console.log(collections);
   const closeModal = (event) => {
     event.preventDefault();
-    console.log('works');
     setModalActive(!modalActive);
-    console.log(modalActive);
   };
 
   return (
@@ -30,7 +29,11 @@ function CollectionIcon() {
           confirmOption={undefined}
         >
           {collections && collections.length ? (
-            <Collections collections={collections} user={account} />
+            <Collections
+              collections={collections}
+              user={account}
+              loggedIn={loggedIn}
+            />
           ) : (
             <div className="text-center">
               <img
