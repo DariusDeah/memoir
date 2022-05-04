@@ -47,7 +47,9 @@ function usePost() {
     postApi.editPost(postId, { status: 'draft' });
   };
   const makePublicFunction = (postId) => {
-    postApi.editPost(postId, { status: 'completed' });
+    postApi.editPost(postId, {
+      status: 'completed'
+    });
   };
 
   // TODO when clicking on a post pic it should take you to the post no matter what url you are at

@@ -31,8 +31,3 @@ export const signupAccount = createAsyncThunk('account/signup', async (accountDa
   const { data } = await accountApi.signupAccount(accountData);
   return data;
 });
-
-export const updateUser = createAsyncThunk('account/update', async (userId, userData) => {
-  const { data } = await userApi.updateUser(userId, userData);
-  return data;
-});

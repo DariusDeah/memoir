@@ -1,10 +1,15 @@
 /* eslint-disable camelcase */
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { userApi } from '../../api/User.api';
-import { User_Action_Types } from '../constants/action-types';
 
 // eslint-disable-next-line import/prefer-default-export
-export const getUser = (userId) => async (dispatch) => {
+export const getUser = createAsyncThunk('user/fetch', async (userId) => {
   const { data } = await userApi.getUserById(userId);
-  console.log(data);
-  dispatch({ type: User_Action_Types.Fetch_User, payload: data });
-};
+  return data;
+});
+
+export const updateUser = createAsyncThunk('account/update', async (userId, userData) => {
+  console.log({ userData });
+  const { data } = await userApi.updateUser(userId, userData);
+  return data;
+});

@@ -13,14 +13,14 @@ class UserApi {
 
   async updateUser(userId, userData) {
     try {
-      console.log(userData);
+      console.log({ userData });
       const formData = new FormData();
-      userData.coverImg !== undefined
+      userData.coverImg
         && formData.append('coverImg', userData.coverImg);
-      userData.photo !== undefined && formData.append('photo', userData.photo);
-      userData.name !== undefined && formData.append('name', userData.name);
-      userData.email !== undefined && formData.append('email', userData.email);
-      userData.bio !== undefined && formData.append('bio', userData.bio);
+      userData.photo && formData.append('photo', userData.photo);
+      userData.name && formData.append('name', userData.name);
+      userData.email && formData.append('email', userData.email);
+      userData.bio && formData.append('bio', userData.bio);
       const res = await API_V1({
         method: 'patch',
         url: `/users/${userId}`,
@@ -62,6 +62,15 @@ class UserApi {
       return res.data;
     } catch (error) {
       throw new Error('error getting accounts following');
+    }
+  }
+
+  async getCreatOfMonth() {
+    try {
+      const res = await API_V1.get('creator-of-month');
+      return res.data.data[0];
+    } catch (error) {
+      throw new Error('error getting creator of month');
     }
   }
 }

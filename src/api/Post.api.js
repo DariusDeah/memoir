@@ -77,27 +77,29 @@ class PostApi {
 
   generatePostForm(postData) {
     try {
-      const tags = [...new Set(postData.tags)];
+      let tags;
       let contentShort;
-
-      if (postData.content.length > 100) {
+      if (postData.tags) {
+        tags = [...new Set(postData.tags)];
+      }
+      if (postData.content && postData.content.length > 100) {
         contentShort = postData.content.substring(0, 100);
       }
-      if (postData.content.length < 100) {
+      if (postData.content && postData.content.length < 100) {
         contentShort = postData.content;
       }
       const formData = new FormData();
-      formData.append('title', postData.title);
-      formData.append('content', postData.content);
+      postData.title && formData.append('title', postData.title);
+      postData.content && formData.append('content', postData.content);
       formData.append('contentShort', contentShort);
-      formData.append('coverImg', postData.coverImg);
-      formData.append('status', postData.status);
-      tags.forEach((element) => {
+      postData.coverImg && formData.append('coverImg', postData.coverImg);
+      postData.status && formData.append('status', postData.status);
+      tags && tags.forEach((element) => {
         formData.append('tags', element);
       });
       return formData;
     } catch (error) {
-      throw new Error(`error creating from data from: ${postData}`);
+      throw new Error(error);
     }
   }
 
@@ -129,6 +131,15 @@ class PostApi {
     }
   }
 
+  async getFeaturedPosts() {
+    try {
+      const res = await API_V1.get('/featured-posts');
+      return res.data.data;
+    } catch (error) {
+      throw new Error('error getting featured posts');
+    }
+  }
+
   async getPost(postId) {
     try {
       const res = await API_V1.get(`/posts/${postId}`, {
@@ -151,6 +162,7 @@ class PostApi {
 
   async editPost(postId, postData) {
     try {
+      console.log(postData);
       const postFormData = this.generatePostForm(postData);
       const post = await API_V1({
         method: 'put',
@@ -164,7 +176,7 @@ class PostApi {
       });
       return post;
     } catch (error) {
-      throw new Error('error editing  post');
+      throw new Error(error);
     }
   }
 

@@ -1,14 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 // import { accountApi } from '../../api/Account.api';
 import {
-  loginAccount, logoutAccount, refreshAccount, signupAccount, updateUser
+  loginAccount, logoutAccount, refreshAccount, signupAccount
 } from '../actions/account.actions';
 
 export const accountSlice = createSlice({
   name: 'account',
   initialState: {
     account: {},
-    collections: [],
     loggedIn: null,
     pending: false,
     error: false
@@ -86,24 +85,6 @@ export const accountSlice = createSlice({
       state.pending = false;
       state.error = action.error;
     },
-    [updateUser.pending]: (state) => {
-      state.pending = true;
-      state.error = false;
-    },
-    [updateUser.fulfilled]: (state, action) => {
-      state.pending = false;
-      state.error = false;
-      state.loggedIn = true;
-      state.account.name = action.payload.name;
-      state.account.photo = action.payload.photo;
-      state.account.email = action.payload.email;
-      state.account.id = action.payload._id;
-    },
-    [updateUser.rejected]: (state, action) => {
-      state.pending = false;
-      state.error = action.error;
-    },
-
   }
 });
 export default accountSlice.reducer;

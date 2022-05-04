@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { userApi } from '../../api/User.api';
 
 function CreatorSpotlight() {
+  const [creator, setCreator] = useState('');
+  const fetchCreatorOfMonth = async () => {
+    const fetchedCreator = await userApi.getCreatOfMonth();
+    setCreator(fetchedCreator);
+  };
+  useEffect(() => {
+    fetchCreatorOfMonth();
+  }, []);
   return (
     <section>
-      <div className="px-4 py-12 mx-auto max-w-7xl sm:px-6 md:px-12 lg:px-24 lg:py-24">
-        <div className="flex flex-wrap items-center mx-auto max-w-7xl">
-          <div className="w-full lg:max-w-lg lg:w-1/2 rounded-xl">
-            <div>
-              <div className="relative w-full max-w-lg">
-                <div
-                  className="
+      {creator && (
+        <div className="px-4 py-12 mx-auto max-w-7xl sm:px-6 md:px-12 lg:px-24 lg:py-24">
+          <div className="flex flex-wrap items-center mx-auto max-w-7xl">
+            <div className="w-full lg:max-w-lg lg:w-1/2 rounded-xl">
+              <div>
+                <div className="relative w-full max-w-lg">
+                  <div
+                    className="
                     absolute
                     top-0
                     rounded-full
@@ -23,9 +34,9 @@ function CreatorSpotlight() {
                     opacity-70
                     animate-blob
                   "
-                />
-                <div
-                  className="
+                  />
+                  <div
+                    className="
                     absolute
                     rounded-full
                     bg-slate-200
@@ -40,19 +51,19 @@ function CreatorSpotlight() {
                     animate-blob
                     animation-delay-4000
                   "
-                />
-                <div className="relative">
-                  <img
-                    className="object-cover object-center mx-auto rounded-lg shadow-2xl"
-                    alt="hero"
-                    src="https://source.unsplash.com/200x200/?portrait"
                   />
+                  <div className="relative">
+                    <img
+                      className="object-cover object-center mx-auto rounded-lg shadow-2xl"
+                      alt="hero"
+                      src={creator.photo}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            className="
+            <div
+              className="
               flex flex-col
               items-center
               mt-12
@@ -63,9 +74,9 @@ function CreatorSpotlight() {
               md:mb-0
               xl:mt-0
             "
-          >
-            <h1
-              className="
+            >
+              <h1
+                className="
                 mb-8
                 text-4xl
                 font-bold
@@ -75,19 +86,20 @@ function CreatorSpotlight() {
                 md:text-7xl
                 lg:text-5xl
               "
-            >
-              {' '}
-              Creator Spotlight{' '}
-            </h1>
-            <p className="mb-8 text-base leading-relaxed text-center text-gray-500">
-              {' '}
-              @LILSlayer23 is this months creator of the month take a moment to
-              check out their amazing content.{' '}
-            </p>
-            <div className="mt-0 lg:mt-6 max-w-7xl sm:flex">
-              <div className="mt-3 rounded-lg sm:mt-0 ">
-                <button
-                  className="
+              >
+                {' '}
+                Creator Spotlight{' '}
+              </h1>
+              <p className="mb-8 text-base leading-relaxed text-center text-gray-500">
+                {' '}
+                @{creator.name} is this months creator of the month take a
+                moment to check out their amazing content.{' '}
+              </p>
+              <div className="mt-0 lg:mt-6 max-w-7xl sm:flex">
+                <div className="mt-3 rounded-lg sm:mt-0 ">
+                  <Link to={`/profile/${creator._id}`}>
+                    <button
+                      className="
                     items-center
                     block
                     px-10
@@ -107,18 +119,20 @@ function CreatorSpotlight() {
                     focus:ring-offset-2
                     focus:bg-slate-800
                   "
-                  type="button"
-                >
-                  {' '}
-                  Go To Profile{' '}
-                </button>
+                      type="button"
+                    >
+                      {' '}
+                      Go To Profile{' '}
+                    </button>
+                  </Link>
+                </div>
+                <div className="mt-3 rounded-lg sm:mt-0 sm:ml-3" />
               </div>
-              <div className="mt-3 rounded-lg sm:mt-0 sm:ml-3" />
             </div>
           </div>
+          <div className="flex flex-wrap lg:mt-8  justify-center  border-b-2 border-grey-500 " />
         </div>
-        <div className="flex flex-wrap lg:mt-8  justify-center  border-b-2 border-grey-500 " />
-      </div>
+      )}
     </section>
   );
 }

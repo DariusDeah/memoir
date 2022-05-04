@@ -21,7 +21,7 @@ function ProfilePage() {
   const { userId } = useParams();
   const { account, loggedIn } = useSelector((state) => state.account);
   const userPosts = useSelector((state) => state.posts.posts);
-  const { user } = useSelector((state) => state.user);
+  const { user, follwers, following } = useSelector((state) => state.user);
   const comments = useSelector((state) => state.comments.comments);
   const userFollowers = useSelector((state) => state.followers.followers);
   const { userCollections } = useSelector((state) => state.collections);
@@ -47,7 +47,6 @@ function ProfilePage() {
   };
   const handleTabChange = (e, id) => {
     e.preventDefault();
-    console.log({ id });
     setSelectedTab(id);
   };
   const followUser = async () => {
@@ -77,7 +76,7 @@ function ProfilePage() {
             <div
               className="lg:w-full w-11/12 md:h-80 h-36 bg-gray-300 bg-center bg-cover md:rounded-lg rounded-md shadow-md"
               style={{
-                backgroundImage: `url(${user.profileCover})`
+                backgroundImage: `url(${user.coverImg})`
               }}
             />
 
@@ -166,6 +165,8 @@ function ProfilePage() {
               user={user}
               commentData={comments}
               collections={userCollections}
+              account={account}
+              loggedIn={loggedIn}
             />
           </div>
         </>

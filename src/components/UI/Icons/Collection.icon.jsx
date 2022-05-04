@@ -30,8 +30,9 @@ function CollectionIcon() {
           {loggedIn && accountCollections ? (
             <Collections
               collections={accountCollections}
-              user={account}
+              account={account}
               loggedIn={loggedIn}
+              user={account}
             />
           ) : (
             <div className="text-center">

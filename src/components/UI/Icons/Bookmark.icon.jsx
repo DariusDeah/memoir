@@ -11,6 +11,7 @@ function Bookmark({ postId }) {
     (state) => state.collections
   );
   const { account, loggedIn } = useSelector((state) => state.account);
+  const { user } = useSelector((state) => state.user);
   const closeModal = (event) => {
     event.preventDefault();
     setModalActive(!modalActive);
@@ -31,9 +32,10 @@ function Bookmark({ postId }) {
           {loggedIn && accountCollections ? (
             <Collections
               collections={accountCollections}
-              user={account}
+              user={user}
               addToCollection={addPostToCollection}
               loggedIn={loggedIn}
+              account={account}
             />
           ) : (
             <div className="text-center">

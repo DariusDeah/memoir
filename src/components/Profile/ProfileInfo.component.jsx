@@ -4,7 +4,8 @@ import * as yup from 'yup';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
-import { updateUser } from '../../redux/actions/account.actions';
+import { updateUser } from '../../redux/actions/user.actions';
+import { userApi } from '../../api/User.api';
 
 // TODO switch user to account
 function ProfileInfo({ user }) {
@@ -23,12 +24,13 @@ function ProfileInfo({ user }) {
       name: user.name,
       email: user.email,
       bio: user.bio || '',
-      coverImg: user.profileCover,
+      coverImg: user.coverImg,
       photo: user.photo
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      dispatch(updateUser(userId, values));
+      // dispatch(updateUser(userId, values));
+      userApi.updateUser(userId, values);
     }
   });
 

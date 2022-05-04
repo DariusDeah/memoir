@@ -4,7 +4,13 @@ import { defaultButton } from '../../default.styles';
 import DeleteIcon from '../UI/Icons/Delete.icon';
 import useCollectionList from './collectionList.hook';
 
-function Collections({ collections, user, addToCollection, loggedIn }) {
+function Collections({
+  collections,
+  user,
+  addToCollection,
+  loggedIn,
+  account
+}) {
   const { removeCollection, collectionId, setCollectionId, formik } =
     useCollectionList();
   return (
@@ -41,69 +47,78 @@ function Collections({ collections, user, addToCollection, loggedIn }) {
                         view
                       </button>
                     </Link>
-                    <section className="p-3 border-2 border-blue-400 rounded-md">
-                      <button
-                        type="button"
-                        onClick={() => addToCollection(collection._id)}
-                        id="add-to-collection"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </button>
-                      <label htmlFor="add-to-collection">Add</label>
-                    </section>
+                    {loggedIn &&
+                      account &&
+                      account.id === collection.creatorId &&
+                      addToCollection && (
+                        <section className="p-3 border-2 border-blue-400 rounded-md">
+                          <button
+                            type="button"
+                            onClick={() => addToCollection(collection._id)}
+                            id="add-to-collection"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-5 w-5"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          </button>
+                          <label htmlFor="add-to-collection">Add</label>
+                        </section>
+                      )}
                   </div>
                   <h5 className="font-medium text-xl ">{collection.name}</h5>
-                  <form
-                    className="relative z-30 flex w-full -space-x-px"
-                    onSubmit={formik.handleSubmit}
-                  >
-                    <input
-                      id="name"
-                      type="text"
-                      placeholder="Edit Name"
-                      className="block w-full rounded-l border-gray-200 text-sm transition focus:z-10 focus:border-blue-600 focus:ring-blue-600 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:opacity-75"
-                      value={formik.values.name}
-                      onChange={formik.handleChange}
-                      onInputCapture={() => {
-                        setCollectionId(collection._id);
-                      }}
-                    />
-                    <button
-                      type="submit"
-                      className="inline-flex w-auto cursor-pointer select-none appearance-none items-center justify-center space-x-1 rounded-r border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-800 transition z-40 hover:border-gray-300 hover:bg-gray-100 focus:z-10 focus:border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                  {loggedIn && account && account.id === collection.creatorId && (
+                    <form
+                      className="relative z-30 flex w-full -space-x-px"
+                      onSubmit={formik.handleSubmit}
                     >
-                      Save
-                    </button>
-                  </form>
+                      <input
+                        id="name"
+                        type="text"
+                        placeholder="Edit Name"
+                        className="block w-full rounded-l border-gray-200 text-sm transition focus:z-10 focus:border-blue-600 focus:ring-blue-600 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:opacity-75"
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
+                        onInputCapture={() => {
+                          setCollectionId(collection._id);
+                        }}
+                      />
+                      <button
+                        type="submit"
+                        className="inline-flex w-auto cursor-pointer select-none appearance-none items-center justify-center space-x-1 rounded-r border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-800 transition z-40 hover:border-gray-300 hover:bg-gray-100 focus:z-10 focus:border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                      >
+                        Save
+                      </button>
+                    </form>
+                  )}
                   <h5 className="font-medium ">
                     posts:
                     {collection.postIds && collection.postIds.length}
                   </h5>
 
                   <p className="mt-1 text-xs font-medium " />
-                  <div className="my-2 border-2 border-red-500 rounded-md  w-20">
-                    <label htmlFor="deleteColection">delete</label>
-                    <div
-                      className="inline-flex space-x-3 p-3 "
-                      id="deleteCollection"
-                    >
-                      <DeleteIcon
-                        deleteFunction={removeCollection}
-                        itemId={collection._id}
-                      />
+                  {loggedIn && account && account.id === collection.creatorId && (
+                    <div className="my-2 border-2 border-red-500 rounded-md  w-20">
+                      <label htmlFor="deleteColection">delete</label>
+                      <div
+                        className="inline-flex space-x-3 p-3 "
+                        id="deleteCollection"
+                      >
+                        <DeleteIcon
+                          deleteFunction={removeCollection}
+                          itemId={collection._id}
+                        />
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </a>
               </li>
             ))}

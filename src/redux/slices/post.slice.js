@@ -24,6 +24,8 @@ export const postSlice = createSlice({
     [getPosts.rejected]: (state, action) => {
       state.pending = false;
       state.error = action.error;
+      state.posts = [];
+      state.postData = false;
     },
     [getPost.pending]: (state) => {
       state.pending = true;
@@ -46,10 +48,9 @@ export const postSlice = createSlice({
     },
 
     [getDraftPosts.fulfilled]: (state, action) => {
-      state.pending = true;
+      state.pending = false;
       state.error = false;
       state.posts = action.payload;
-      state.postData = true;
     },
     [getDraftPosts.rejected]: (state, action) => {
       state.pending = false;

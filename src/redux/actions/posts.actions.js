@@ -13,10 +13,10 @@ export const getPost = createAsyncThunk('post/fetchOnePost', async (postId) => {
   return data;
 });
 
-export const getDraftPosts = () => async (dispatch) => {
+export const getDraftPosts = createAsyncThunk('post/fetchDrafts', async () => {
   const { data } = await postApi.getDrafts();
   return data;
-};
+});
 
 export const deletePost = (postId) => async (dispatch) => {
   try {
