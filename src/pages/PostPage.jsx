@@ -5,13 +5,16 @@ import Collaborators from '../components/Collaborators/Collaborators.component';
 import Comment from '../components/Comments/Comment.component';
 import CommentCreate from '../components/Comments/CommentCreate.component';
 import PostLayout1 from '../components/Posts/PostLayout1.component';
+import Spinner from '../components/UI/Icons/spinner.ui';
 import { getPostComments } from '../redux/actions/comments.actions';
 import { getPostLikes } from '../redux/actions/likes.action';
 import { getPost } from '../redux/actions/posts.actions';
 
 function PostPage() {
   const [createComment, setCreateComment] = useState(false);
-  const comments = useSelector((state) => state.comments.comments);
+  const { comments, pending, error, data } = useSelector(
+    (state) => state.comments
+  );
   const likes = useSelector((state) => state.likes.likes);
   console.log({ likes });
   const dispatch = useDispatch();
@@ -28,7 +31,7 @@ function PostPage() {
       <h1 className="text-2xl text-center al text-grey-400 font-bold pb-6">
         Collaborators:
       </h1>
-      <Collaborators />
+      {/* <Collaborators /> */}
       <h1 className="text-2xl text-center  text-grey-400 font-bold pb-6">
         Comments:
       </h1>
@@ -43,7 +46,8 @@ function PostPage() {
         <div className="px-4  ">{createComment && <CommentCreate />}</div>
       </div>
       <div className="px-4 lg:px-2">
-        <Comment commentData={comments} />
+        {comments && data && <Comment commentData={comments} />}
+        {pending && <Spinner />}
       </div>
     </div>
   );

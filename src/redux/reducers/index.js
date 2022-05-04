@@ -4,7 +4,7 @@ import account from '../slices/account.slice';
 import user from '../slices/user.slice';
 import collections from '../slices/collections.slice';
 // import user from './user'
-import comments from './comment.reducer';
+import comments from '../slices/comments.slice';
 import followers from './followers.reducer';
 import likes from './likes.reducer';
 // import profile from './profile'

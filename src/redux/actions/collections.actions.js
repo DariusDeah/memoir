@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { collectionApi } from '../../api/collections.api';
-import { Collection_Action_Types } from '../constants/action-types';
 
 export const getAccountCollections = createAsyncThunk('account/collections', async (accountId) => {
   const { data } = await collectionApi.getUserCollections(accountId);

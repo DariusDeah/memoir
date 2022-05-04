@@ -67,9 +67,10 @@ class PostApi {
 
   async commentPost(postId, comment) {
     try {
-      await API_V1.post(`posts/${postId}/comments`, comment, {
+      const res = await API_V1.post(`posts/${postId}/comments`, comment, {
         withCredentials: true
       });
+      return res.data;
     } catch (error) {
       throw new Error('error creating comment');
     }

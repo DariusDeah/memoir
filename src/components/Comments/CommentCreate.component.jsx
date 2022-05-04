@@ -1,14 +1,18 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik, useFormik } from 'formik';
 import * as yup from 'yup';
+import { useParams } from 'react-router';
 import { postApi } from '../../api/Post.api';
+import { createComment } from '../../redux/actions/comments.actions';
 
 const schema = yup.object().shape({
   content: yup.string().required().max(255).min(1)
 });
 function CommentCreate() {
   const account = useSelector((state) => state.account.account);
+  const dispatch = useDispatch();
+  const { postId } = useParams();
   const post = useSelector((state) => state.posts.posts);
   const formik = useFormik({
     initialValues: {
@@ -16,7 +20,8 @@ function CommentCreate() {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      postApi.commentPost(post.id, values);
+      dispatch(createComment({ postId, values }));
+      // postApi.commentPost(post.id, values);
     }
   });
   return (
