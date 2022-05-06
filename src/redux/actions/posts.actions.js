@@ -7,6 +7,10 @@ export const getPosts = createAsyncThunk('post/fetchPosts', async (query) => {
   const { data } = await postApi.getPosts(query);
   return data;
 });
+export const getFeaturedPosts = createAsyncThunk('post/fetchFeaturedPosts', async () => {
+  const { data } = await postApi.getFeaturedPosts();
+  return data;
+});
 
 export const getPost = createAsyncThunk('post/fetchOnePost', async (postId) => {
   const { data } = await postApi.getPost(postId);
@@ -17,12 +21,20 @@ export const getDraftPosts = createAsyncThunk('post/fetchDrafts', async () => {
   const { data } = await postApi.getDrafts();
   return data;
 });
-
-export const deletePost = (postId) => async (dispatch) => {
-  try {
-    const data = await postApi.deletePost(postId);
-    dispatch({ type: Post_Action_Types.DELETE, payload: data });
-  } catch (error) {
-    console.log(error);
-  }
-};
+export const getPostFeed = createAsyncThunk('post/fetchFeed', async () => {
+  const { data } = await postApi.getPostFeed();
+  return data;
+});
+export const deletePost = createAsyncThunk('post/delete', async (postId) => {
+  const { data } = await postApi.deletePost(postId);
+  return data;
+});
+export const editPostData = createAsyncThunk('post/edit', async (postData) => {
+  const { postId, ...values } = postData;
+  const { data } = await postApi.editPost(postId, values);
+  return data;
+});
+export const getRelatedPosts = createAsyncThunk('post/fetchRelated', async (postId) => {
+  const { data } = await postApi.getRelatedPosts(postId);
+  return data;
+});

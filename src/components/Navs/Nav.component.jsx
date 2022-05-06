@@ -22,7 +22,8 @@ function Nav() {
     logout,
     modalActive,
     setModalActive,
-    loggedIn
+    loggedIn,
+    routeToAuthPage
   } = useNav();
   return (
     <div className=" px-4 py-5 mx-auto  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 ">
@@ -36,6 +37,7 @@ function Nav() {
           modalActive={modalActive}
           logout={logout}
           loggedIn={loggedIn}
+          routeToAuthPage={routeToAuthPage}
         />
         <MobileNav
           isMenuOpen={isMenuOpen}
@@ -45,6 +47,7 @@ function Nav() {
           modalActive={modalActive}
           account={account}
           loggedIn={loggedIn}
+          routeToAuthPage={routeToAuthPage}
         />
       </div>
     </div>

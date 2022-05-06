@@ -19,19 +19,19 @@ function FeaturesRequestPage() {
 
           <p className="block max-w-2xl mt-4 text-xl text-gray-500 dark:text-gray-300">
             Have some excellent ideas of features that should be implemented on
-            Memoir? Feel free to share them below!
+            Memoir? Shoot me an email and we can discuss it further
           </p>
 
           <div className="mt-6 sm:-mx-2">
             <div className="inline-flex w-full overflow-hidden rounded-lg shadow sm:w-auto sm:mx-2" />
 
             <div className="inline-flex w-full mt-4 overflow-hidden rounded-lg shadow sm:w-auto sm:mx-2 sm:mt-0">
-              <button
+              <a
                 className="inline-flex items-center justify-center w-full px-5 py-3 text-base font-medium text-white transition-colors duration-150 transform sm:w-auto bg-gradient-to-r from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-600"
-                type="button"
+                href="mailto:comdariusdeah21@gmail.com?subject = Features"
               >
-                <span className="mx-2">Submit a Request</span>
-              </button>
+                <span className="mx-2">Email a Request</span>
+              </a>
             </div>
           </div>
         </div>

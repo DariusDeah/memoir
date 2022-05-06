@@ -1,36 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { postApi } from '../../api/Post.api';
 import Avatar from '../UI/Avatar.ui';
 
 function FeaturedPosts() {
-  const [featuredPosts, setFeaturedPosts] = useState('');
-  const getFeaturedPosts = async () => {
-    const posts = await postApi.getFeaturedPosts();
-    setFeaturedPosts(posts);
-  };
-  useEffect(() => {
-    getFeaturedPosts();
-  }, []);
+  const { featuredPosts, pending, error } = useSelector((state) => state.posts);
   return (
     <section>
       <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 border-b-4 border-grey-400">
         <h1 className="font-bold text-xl lg:text-4xl pb-10 ">Featured Posts</h1>
         <div className="grid gap-10 row-gap-8  lg:grid-cols-5">
-          {featuredPosts[0] && (
+          {featuredPosts[0] && !pending && (
             <div className="lg:col-span-2  mb-12 lg:mb-0">
               <p className="mb-2 text-xs font-semibold tracking-wide text-gray-600 uppercase">
                 {featuredPosts[0].createdAt}
               </p>
               <div className="mb-3">
                 <Link to={`/posts/${featuredPosts[0]._id}`}>
-                  <a
-                    href="/"
-                    aria-label="Article"
-                    className="inline-block text-black transition-colors duration-200 hover:text-deep-purple-accent-400"
-                  >
-                    <img
-                      className="
+                  <img
+                    className="
                 object-cover object-center
                 w-full
                 mb-8
@@ -38,14 +26,13 @@ function FeaturedPosts() {
                 md:h-36
                 rounded-xl
               "
-                      src={featuredPosts[0].coverImg}
-                      alt="blog"
-                    />
+                    src={featuredPosts[0].coverImg}
+                    alt="blog"
+                  />
 
-                    <p className="font-sans text-xl font-extrabold leading-none tracking-tight lg:text-4xl xl:text-5xl">
-                      {featuredPosts[0].title}
-                    </p>
-                  </a>
+                  <p className="font-sans text-xl font-extrabold leading-none tracking-tight lg:text-4xl xl:text-5xl">
+                    {featuredPosts[0].title}
+                  </p>
                 </Link>
               </div>
               <p className="mb-4 text-base text-gray-700 md:text-lg">
@@ -93,13 +80,8 @@ function FeaturedPosts() {
                 </p>
                 <div className="mb-3">
                   <Link to={`/posts/${featuredPosts[1]._id}`}>
-                    <a
-                      href="/"
-                      aria-label="Article"
-                      className="inline-block text-black transition-colors duration-200 hover:text-deep-purple-accent-400"
-                    >
-                      <img
-                        className="
+                    <img
+                      className="
            object-cover object-center
                 w-full
                 mb-8
@@ -107,13 +89,12 @@ function FeaturedPosts() {
                 md:h-36
                 rounded-xl
               "
-                        src={featuredPosts[1].coverImg}
-                        alt="blog"
-                      />
-                      <p className="font-sans text-xl font-extrabold leading-none tracking-tight lg:text-2xl">
-                        {featuredPosts[1].title}
-                      </p>
-                    </a>
+                      src={featuredPosts[1].coverImg}
+                      alt="blog"
+                    />
+                    <p className="font-sans text-xl font-extrabold leading-none tracking-tight lg:text-2xl">
+                      {featuredPosts[1].title}
+                    </p>
                   </Link>
                 </div>
                 <p className="mb-4 text-base text-gray-700 md:text-lg">
@@ -162,13 +143,8 @@ function FeaturedPosts() {
                 </p>
                 <div className="mb-3">
                   <Link to={`/posts/${featuredPosts[2]._id}`}>
-                    <a
-                      href="/"
-                      aria-label="Article"
-                      className="inline-block text-black transition-colors duration-200 hover:text-deep-purple-accent-400"
-                    >
-                      <img
-                        className="
+                    <img
+                      className="
            object-cover object-center
                 w-full
                 mb-8
@@ -176,13 +152,12 @@ function FeaturedPosts() {
                 md:h-36
                 rounded-xl
               "
-                        src={featuredPosts[2].coverImg}
-                        alt="blog"
-                      />
-                      <p className="font-sans text-xl font-extrabold leading-none tracking-tight lg:text-2xl">
-                        {featuredPosts[2].title}
-                      </p>
-                    </a>
+                      src={featuredPosts[2].coverImg}
+                      alt="blog"
+                    />
+                    <p className="font-sans text-xl font-extrabold leading-none tracking-tight lg:text-2xl">
+                      {featuredPosts[2].title}
+                    </p>
                   </Link>
                 </div>
                 <p className="mb-4 text-base text-gray-700 md:text-lg">

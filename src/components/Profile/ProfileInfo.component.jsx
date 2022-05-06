@@ -29,8 +29,8 @@ function ProfileInfo({ user }) {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      // dispatch(updateUser(userId, values));
-      userApi.updateUser(userId, values);
+      dispatch(updateUser({ userId, values }));
+      // userApi.updateUser(userId, values);
     }
   });
 

@@ -11,7 +11,8 @@ function MobileNav({
   modalActive,
   closeModal,
   account,
-  loggedIn
+  loggedIn,
+  routeToAuthPage
 }) {
   return (
     <div className="ml-auto lg:hidden">

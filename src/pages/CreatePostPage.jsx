@@ -37,7 +37,7 @@ function CreatePostPage() {
       // formik.resetForm();
     }
   });
-  const account = useSelector((state) => state.account.account);
+  const { account, loggedIn } = useSelector((state) => state.account);
   const [selectedImage, setSelectedImage] = useState('');
   const [content, setContent] = useState('');
   const selectedTags = [];
@@ -74,86 +74,98 @@ function CreatePostPage() {
   };
 
   return (
-    <form className="p-5" onSubmit={formik.handleSubmit}>
-      <div className="flex pb-3">
-        {/* TODO get rid of this ternary and block this page from being accesed if the user is not signed in  */}
-        {account && (
-          <>
-            <Avatar photo={account.photo} id={account.id} styles="w-12 h-12" />
-            <p className="mr-3 font-semibold pl-3">@{account.name}</p>
-            <p>{new Date().toLocaleDateString()}</p>
-          </>
-        )}
-      </div>
-      <ImageUpload imageSelector={chooseImage} file={selectedImage} />
-      <label htmlFor="title" className="font-semibold ">
-        Title
-      </label>
-      <input
-        aria-label="title"
-        id="title"
-        onChange={formik.handleChange}
-        className="p-5  border-2 border-black rounded-md w-full font-bold"
-        value={formik.values.title}
-      />
-      <RichTextEditor writeContent={writeContent} />
-      <TagsList
-        tags={Tag_Types}
-        selectTag={selectTag}
-        removeSelectedTag={removeSelectedTag}
-        selectedTags={formik.values.tags}
-      />
-      <h5
-        style={{
-          color: formik.values.content.length > maxCharacters && 'red'
-        }}
-      >
-        {maxCharacters - content.length}
-      </h5>
-
-      <div className="flex">
-        <button
-          className="relative inline-block mt-5 px-8 py-3 overflow-hidden border border-black group focus:outline-none focus:ring"
-          type="button"
-          onClick={(e) => {
-            e.preventDefault();
-            SetStatus('draft');
-            formik.handleSubmit();
+    <>
+      <h1 className="text-2xl text-center al text-grey-400 font-bold pb-6">
+        Create +
+      </h1>
+      <form className="p-5" onSubmit={formik.handleSubmit}>
+        <div className="flex pb-3">
+          {/* TODO get rid of this ternary and block this page from being accesed if the user is not signed in  */}
+          {account && loggedIn && (
+            <>
+              <Avatar
+                photo={account.photo}
+                id={account.id}
+                styles="w-12 h-12"
+              />
+              <p className="mr-3 font-semibold pl-3">@{account.name}</p>
+              <p>{new Date().toLocaleDateString()}</p>
+            </>
+          )}
+        </div>
+        <ImageUpload imageSelector={chooseImage} file={selectedImage} />
+        <label htmlFor="title" className="font-semibold ">
+          Title
+        </label>
+        <input
+          aria-label="title"
+          id="title"
+          onChange={formik.handleChange}
+          className="p-5  border-2 border-black rounded-md w-full font-bold"
+          value={formik.values.title}
+        />
+        <RichTextEditor writeContent={writeContent} />
+        <h5
+          style={{
+            color: formik.values.content.length > maxCharacters && 'red'
           }}
         >
-          <span className="absolute inset-x-0  bottom-0 h-[2px] transition-all bg-black group-hover:h-full group-active:bg-black" />
+          {maxCharacters - content.length}
+        </h5>
+        <TagsList
+          tags={Tag_Types}
+          selectTag={selectTag}
+          removeSelectedTag={removeSelectedTag}
+          selectedTags={formik.values.tags}
+        />
+        <h5 className="mt-4">
+          Tags Selected:
+          {selectedTags}
+        </h5>
+        <div className="flex">
+          <button
+            className="relative inline-block mt-5 px-8 py-3 overflow-hidden border border-black group focus:outline-none focus:ring"
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              SetStatus('draft');
+              formik.handleSubmit();
+            }}
+          >
+            <span className="absolute inset-x-0  bottom-0 h-[2px] transition-all bg-black group-hover:h-full group-active:bg-black" />
 
-          <span className="relative text-sm font-medium text-black transition-colors group-hover:text-white">
-            Save
-          </span>
-        </button>
-        <button
-          className="relative inline-block mt-5 px-8 py-3 overflow-hidden border border-green-600 group focus:outline-none focus:ring"
-          type="submit"
-          onClick={(e) => {
-            e.preventDefault();
-            SetStatus('completed');
-            formik.handleSubmit();
-          }}
-        >
-          <span className="absolute inset-x-0  bottom-0 h-[2px] transition-all bg-green-600 group-hover:h-full group-active:bg-green-500" />
+            <span className="relative text-sm font-medium text-black transition-colors group-hover:text-white">
+              Save
+            </span>
+          </button>
+          <button
+            className="relative inline-block mt-5 px-8 py-3 overflow-hidden border border-green-600 group focus:outline-none focus:ring"
+            type="submit"
+            onClick={(e) => {
+              e.preventDefault();
+              SetStatus('completed');
+              formik.handleSubmit();
+            }}
+          >
+            <span className="absolute inset-x-0  bottom-0 h-[2px] transition-all bg-green-600 group-hover:h-full group-active:bg-green-500" />
 
-          <span className="relative text-sm font-medium text-green-500 transition-colors group-hover:text-white">
-            Save & Post
-          </span>
-        </button>
-        <button
-          className="relative inline-block mt-5 px-8 py-3 overflow-hidden border border-red-600 group focus:outline-none focus:ring "
-          type="button"
-        >
-          <span className="absolute inset-x-0  bottom-0 h-[2px] transition-all bg-red-600 group-hover:h-full group-active:bg-red-500" />
+            <span className="relative text-sm font-medium text-green-500 transition-colors group-hover:text-white">
+              Save & Post
+            </span>
+          </button>
+          <button
+            className="relative inline-block mt-5 px-8 py-3 overflow-hidden border border-red-600 group focus:outline-none focus:ring "
+            type="button"
+          >
+            <span className="absolute inset-x-0  bottom-0 h-[2px] transition-all bg-red-600 group-hover:h-full group-active:bg-red-500" />
 
-          <span className="relative text-sm font-medium text-red-500 transition-colors group-hover:text-white">
-            Discard
-          </span>
-        </button>
-      </div>
-    </form>
+            <span className="relative text-sm font-medium text-red-500 transition-colors group-hover:text-white">
+              Discard
+            </span>
+          </button>
+        </div>
+      </form>
+    </>
   );
 }
 

@@ -6,9 +6,9 @@ function useAlert() {
   setTimeout(() => {
     setShowAlert(false);
   }, 4500);
-  useEffect(() => () => {
-    setShowAlert(true);
-  }, [showAlert]);
+  // useEffect(() => () => {
+  //   setShowAlert(true);
+  // }, [showAlert]);
 
   return { showAlert };
 }

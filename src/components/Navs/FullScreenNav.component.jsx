@@ -13,7 +13,8 @@ function FullScreenNav({
   pending,
   error,
   logout,
-  loggedIn
+  loggedIn,
+  routeToAuthPage
 }) {
   return (
     <>
@@ -29,7 +30,7 @@ function FullScreenNav({
             </p>
           </li>
         </Link>
-        <li>
+        <li onClick={routeToAuthPage}>
           <Link to="create-post">
             <p
               aria-label="Our product"
@@ -52,24 +53,28 @@ function FullScreenNav({
           )}
         </li>
         <li>
-          <a
-            href="/"
-            aria-label="Product pricing"
-            title="Product pricing"
-            className={NavStyles.navLinks}
-          >
-            Search
-          </a>
+          <Link to="search">
+            <a
+              href="/"
+              aria-label="Product pricing"
+              title="Product pricing"
+              className={NavStyles.navLinks}
+            >
+              Search
+            </a>
+          </Link>
         </li>
         <li>
-          <a
-            href="/"
-            aria-label="Product pricing"
-            title="Product pricing"
-            className={NavStyles.navLinks}
-          >
-            Features+
-          </a>
+          <Link to="feature-request">
+            <a
+              href="/"
+              aria-label="Product pricing"
+              title="Product pricing"
+              className="read-only disabled:text-slate-500"
+            >
+              Features+
+            </a>
+          </Link>
         </li>
       </ul>
       <a

@@ -25,23 +25,23 @@ const schema = yup.object().shape({
 function EditPostPage() {
   const { postId } = useParams();
   const dispatch = useDispatch();
-  const post = useSelector((state) => state.posts.posts);
+  const { post, postData } = useSelector((state) => state.posts);
   console.log(post);
-  const account = useSelector((state) => state.account.account);
+  const { account } = useSelector((state) => state.account);
   const [selectedImage, setSelectedImage] = useState('');
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState(post.content);
   const selectedTags = [];
   useEffect(() => {
     dispatch(getPost(postId));
-  }, []);
+  }, [postId]);
 
   const formik = useFormik({
     initialValues: {
-      title: 'no title yet',
-      content: 'No Content Yet',
-      coverImg: '',
-      status: '',
-      tags: []
+      title: post.title,
+      content: post.content,
+      coverImg: post.coverImg,
+      status: post.status,
+      tags: [post.tags]
     },
     validationSchema: schema,
     onSubmit: (values) => {
@@ -82,7 +82,7 @@ function EditPostPage() {
 
   return (
     <>
-      {post && (
+      {post && postData && (
         <form className="p-5" onSubmit={formik.handleSubmit}>
           <div className="flex pb-3">
             {/* TODO get rid of this ternary and block this page from being accesed if the user is not signed in  */}
@@ -99,7 +99,7 @@ function EditPostPage() {
             )}
           </div>
           <img
-            src={post.image}
+            src={post.coverImg}
             className=" h-80 w-80 rounded-lg justify-center"
           />
           <ImageUpload imageSelector={chooseImage} file={selectedImage} />
@@ -111,12 +111,13 @@ function EditPostPage() {
             id="title"
             onChange={formik.handleChange}
             className="p-5  border-2 border-black rounded-md w-full font-bold"
-            placeholder={post.title}
-            value={formik.values.title}
+            // placeholder={post.title}
+            value={post.title}
           />
           <RichTextEditor
             writeContent={writeContent}
-            placeholder={post.content}
+            // placeholder={post.content}
+            value={post.content}
           />
           <TagsList
             tags={Tag_Types}
@@ -124,14 +125,15 @@ function EditPostPage() {
             removeSelectedTag={removeSelectedTag}
             selectedTags={formik.values.tags}
           />
-          <h5
-            style={{
-              color: formik.values.content.length > maxCharacters && 'red'
-            }}
-          >
-            {maxCharacters - content.length}
-          </h5>
-
+          {content && (
+            <h5
+              style={{
+                color: post.content.length > maxCharacters && 'red'
+              }}
+            >
+              {maxCharacters - content.length}
+            </h5>
+          )}
           <div className="flex">
             <button
               className="relative inline-block mt-5 px-8 py-3 overflow-hidden border border-green-600 group focus:outline-none focus:ring"

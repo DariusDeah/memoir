@@ -23,9 +23,10 @@ class CommentAPI {
 
   async editComment(commentId, commentData) {
     try {
-      await API_V1.patch(`comments/${commentId}`, { content: commentData }, {
+      const res = await API_V1.patch(`comments/${commentId}`, { content: commentData }, {
         withCredentials: true,
       });
+      return res.data;
     } catch (error) {
       throw new Error('error editing comment');
     }

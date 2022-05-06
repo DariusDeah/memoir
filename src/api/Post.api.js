@@ -1,28 +1,6 @@
 import { API_V1 } from '../config/axios.config';
 
 class PostApi {
-  // createPostDTO(post) {
-  //   if (!post) {
-  //     throw new Error('specify post to generate dto');
-  //   }
-
-  //   const postDto = {
-  //     title: post.title,
-  //     content: post.content,
-  //     image: post.coverImg,
-  //     authorName: post.creator.name,
-  //     authorPhoto: post.creator.photo,
-  //     authorId: post.creatorId,
-  //     // eslint-disable-next-line no-underscore-dangle
-  //     id: post._id,
-  //     tags: post.tags,
-  //     authorBio: post.creator.bio,
-  //     createdDate: new Date(post.createdAt).toDateString(),
-  //     status: post.status
-  //   };
-  //   return { ...postDto };
-  // }
-
   async getPostComments(postId) {
     try {
       const res = await API_V1.get(`posts/${postId}/comments`);
@@ -36,8 +14,7 @@ class PostApi {
   async getPostLikes(postId) {
     try {
       const res = await API_V1.get(`posts/${postId}/likes`);
-      console.log({ res });
-      return res.data.data;
+      return res.data;
     } catch (error) {
       throw new Error('likes not found');
     }
@@ -45,11 +22,12 @@ class PostApi {
 
   async likePost(postId) {
     try {
-      await API_V1.post(
+      const res = await API_V1.post(
         `posts/${postId}/likes`,
         null,
         { withCredentials: true }
       );
+      return res.data;
     } catch (error) {
       throw new Error('error liking post');
     }
@@ -57,9 +35,10 @@ class PostApi {
 
   async unlikePost(postId) {
     try {
-      await API_V1.delete(`posts/${postId}/likes`, {
+      const res = await API_V1.delete(`posts/${postId}/likes`, {
         withCredentials: true
       });
+      return res.data;
     } catch (error) {
       throw new Error('Error unliking post  ');
     }
@@ -135,7 +114,7 @@ class PostApi {
   async getFeaturedPosts() {
     try {
       const res = await API_V1.get('/featured-posts');
-      return res.data.data;
+      return res.data;
     } catch (error) {
       throw new Error('error getting featured posts');
     }
@@ -163,9 +142,8 @@ class PostApi {
 
   async editPost(postId, postData) {
     try {
-      console.log(postData);
       const postFormData = this.generatePostForm(postData);
-      const post = await API_V1({
+      const res = await API_V1({
         method: 'put',
         url: `/posts/${postId}`,
         data: postFormData,
@@ -175,7 +153,7 @@ class PostApi {
         },
         withCredentials: true
       });
-      return post;
+      return res.data;
     } catch (error) {
       throw new Error(error);
     }
@@ -183,9 +161,28 @@ class PostApi {
 
   async deletePost(postId) {
     try {
-      await API_V1.delete(`/posts/${postId}`, { withCredentials: true });
+      const res = await API_V1.delete(`/posts/${postId}`, { withCredentials: true });
+      return res.data;
     } catch (error) {
       throw new Error('error deleting post');
+    }
+  }
+
+  async getPostFeed() {
+    try {
+      const res = await API_V1.get('/posts/feed', { withCredentials: true });
+      return res.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async getRelatedPosts(postId) {
+    try {
+      const res = await API_V1.get(`posts/${postId}/related`);
+      return res.data;
+    } catch (error) {
+      throw new Error('error getting related posts');
     }
   }
 }

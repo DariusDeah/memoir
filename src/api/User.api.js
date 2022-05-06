@@ -4,8 +4,7 @@ class UserApi {
   async getUserById(userId) {
     try {
       const res = await API_V1.get(`/users/${userId}`);
-      // console.log(res.data._id);
-      return res;
+      return res.data;
     } catch (error) {
       throw new Error('error fetching user');
     }
@@ -39,13 +38,21 @@ class UserApi {
 
   async followUser(userId) {
     try {
-      await API_V1.post(`/users/${userId}/followers`, null, { withCredentials: true });
+      const res = await API_V1.post(`/users/${userId}/followers`, null, { withCredentials: true });
+      return res.data;
     } catch (error) {
       throw new Error('error following user');
     }
   }
 
-  // async unfollowUser(userId, followerId) { }
+  async unfollowUser(userId, followerId) {
+    try {
+      const res = await API_V1.delete(`/users/${userId}/followers`, { withCredentials: true });
+      return res.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 
   async getFollowers(userId) {
     try {

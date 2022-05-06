@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { commentApi } from '../../api/comment.api';
+import Avatar from '../UI/Avatar.ui';
 import DottedDropdown from '../UI/DottedDropdown.ui';
 
 function Comment({ commentData }) {
   const { account } = useSelector((state) => state.account);
   const [commentValues, setcommentValues] = useState('');
+  const dispatch = useDispatch();
   const items = [
     {
       id: 1,
@@ -15,13 +17,14 @@ function Comment({ commentData }) {
     },
     { id: 2, title: 'Delete' }
   ];
-  const dateFormat = (date) =>
+  const dateFormat = (date) => {
     new Date(date).toDateString().substring(4, date.length);
+  };
   const editComment = async (commentId) => {
-    console.log(commentValues);
-    await commentApi.editComment(commentId, commentValues);
+    dispatch(editComment({ commentId, values: commentData }));
   };
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {commentData &&
         commentData.map((comment) => (
@@ -34,19 +37,20 @@ function Comment({ commentData }) {
                 {comment.createdAt && dateFormat(comment.createdAt)}
               </span>
             </div>
-            <div className="mt-2 mb-10">
+            <div className="mt-2 mb-10 h-fit">
+              <p>{comment.content}</p>
               <input
-                className="mt-2 text-gray-600  text-left"
+                className="mt- w-fit h-fit text-left"
                 placeholder={comment.content}
                 onInputCapture={(e) => setcommentValues(e.target.value)}
               />
             </div>
             <div className="flex items-center justify-between mt-4">
               <div className="flex items-center">
-                <img
-                  className=" object-cover w-10 h-10 mx-4 rounded-full sm:block"
-                  src={comment.creator.photo}
-                  alt="avatar"
+                <Avatar
+                  id={comment.creator._id}
+                  styles=" object-cover w-10 h-10 mx-4 rounded-full sm:block"
+                  photo={comment.creator.photo}
                 />
                 <a className="font-bold text-black cursor-pointer ">
                   {comment.creator.name}

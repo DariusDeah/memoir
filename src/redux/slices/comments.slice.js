@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createComment, getPostComments } from '../actions/comments.actions';
+import {
+  createComment, editComment, getComments, getPostComments
+} from '../actions/comments.actions';
 
 export const commentSlice = createSlice({
   name: 'comments',
@@ -37,6 +39,36 @@ export const commentSlice = createSlice({
       state.data = true;
     },
     [getPostComments.rejected]: (state, action) => {
+      state.pending = false;
+      state.error = action.error;
+      state.comments = [];
+    },
+    [getComments.pending]: (state) => {
+      state.pending = true;
+      state.error = false;
+    },
+    [getComments.fulfilled]: (state, action) => {
+      state.pending = false;
+      state.error = false;
+      state.comments = action.payload;
+      state.data = true;
+    },
+    [getComments.rejected]: (state, action) => {
+      state.pending = false;
+      state.error = action.error;
+      state.comments = [];
+    },
+    [editComment.pending]: (state) => {
+      state.pending = true;
+      state.error = false;
+    },
+    [editComment.fulfilled]: (state, action) => {
+      state.pending = false;
+      state.error = false;
+      state.comments = action.payload;
+      state.data = true;
+    },
+    [editComment.rejected]: (state, action) => {
       state.pending = false;
       state.error = action.error;
       state.comments = [];

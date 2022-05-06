@@ -25,7 +25,7 @@ function AuthPage() {
           {isNewUser ? 'Create Account' : 'Welcome back!'}
         </p>
 
-        <GoogleOauthIcon />
+        {/* <GoogleOauthIcon /> */}
         <div className="flex items-center justify-between mt-4">
           <span className="w-1/5 border-b  lg:w-1/4" />
 

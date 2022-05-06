@@ -10,7 +10,12 @@ import { getDraftPosts, getPosts } from '../redux/actions/posts.actions';
 import { getUser } from '../redux/actions/user.actions';
 import Comment from '../components/Comments/Comment.component';
 import { userApi } from '../api/User.api';
-import { getUserFollowers } from '../redux/actions/followers.actions';
+import {
+  getUserFollowers,
+  getUserFollowings,
+  followUser,
+  unfollowUser
+} from '../redux/actions/followers.actions';
 import { getUserCollections } from '../redux/actions/collections.actions';
 import Collections from '../components/Collections/ColectionsList.component';
 
@@ -20,10 +25,11 @@ function ProfilePage() {
   const dispatch = useDispatch();
   const { userId } = useParams();
   const { account, loggedIn } = useSelector((state) => state.account);
-  const userPosts = useSelector((state) => state.posts.posts);
-  const { user, follwers, following } = useSelector((state) => state.user);
-  const comments = useSelector((state) => state.comments.comments);
-  const userFollowers = useSelector((state) => state.followers.followers);
+  const { posts } = useSelector((state) => state.posts);
+  const { user, followers, following, followingData } = useSelector(
+    (state) => state.user
+  );
+  const { comments } = useSelector((state) => state.comments);
   const { userCollections } = useSelector((state) => state.collections);
   const fetchUserPosts = () => {
     userId && dispatch(getPosts(`?creatorId=${userId}`));
@@ -40,7 +46,7 @@ function ProfilePage() {
     dispatch(getUserFollowers(userId));
   };
   const fetchFollowing = () => {
-    userApi.getUserFollowings(userId);
+    dispatch(getUserFollowings(userId));
   };
   const fetchUserCollections = () => {
     dispatch(getUserCollections(userId));
@@ -49,9 +55,7 @@ function ProfilePage() {
     e.preventDefault();
     setSelectedTab(id);
   };
-  const followUser = async () => {
-    await userApi.followUser(userId);
-  };
+
   const components = {
     1: ProfileInfo,
     2: Post,
@@ -96,23 +100,25 @@ function ProfilePage() {
             </h1>
             {/* <p>{user.website}</p> */}
             <p>{user.bio}</p>
-            {userPosts && userFollowers && userCollections && (
+            {user && followingData && (
               <ProfileStats
-                userPostsLength={userPosts.length}
-                userFollowersLength={userFollowers.length}
+                userPostsLength={posts.length}
+                userFollowersLength={followers.length}
                 userCollectionsLength={userCollections.length}
+                userFollowingLength={following.length}
               />
             )}
             {loggedIn && account.id !== user.id && (
               <div className="inline-flex items-center -space-x-px text-xs rounded-md">
-                {userFollowers &&
-                userFollowers.filter((x) => x.followerId === account.id)
-                  .length ? (
+                {followers &&
+                followers.filter((x) => x.followerId === account.id).length ? (
                   <div className=" inline-flex ">
                     <button
                       className="px-2 w-full py-1 text-xs font-semibold text-white uppercase transition-colors duration-200 transform  rounded bg-violet-400 focus:outline-none flex"
                       type="button"
-                      onClick={followUser}
+                      onClick={() => {
+                        dispatch(unfollowUser(userId));
+                      }}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -135,7 +141,9 @@ function ProfilePage() {
                   <button
                     className="px-2 py-1 text-xs font-semibold text-white uppercase transition-colors duration-200 transform bg-gray-800 rounded hover:bg-gray-700 dark:hover:bg-gray-600 focus:bg-gray-700 dark:focus:bg-gray-600 focus:outline-none"
                     type="button"
-                    onClick={followUser}
+                    onClick={() => {
+                      dispatch(followUser(userId));
+                    }}
                   >
                     Follow
                   </button>
@@ -161,7 +169,7 @@ function ProfilePage() {
           </div>
           <div className=" max-w-7xl  mx-auto   md:px-2 card">
             <Component
-              userPosts={userPosts}
+              userPosts={posts}
               user={user}
               commentData={comments}
               collections={userCollections}

@@ -1,8 +1,17 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { postApi } from '../../api/Post.api';
-import { Likes_Action_Types } from '../constants/action-types';
 
-export const getPostLikes = (postId) => async (dispatch) => {
-  const data = await postApi.getPostLikes(postId);
-  console.log(data);
-  dispatch({ type: Likes_Action_Types.FETCH_LIKES, payload: data });
-};
+export const getPostLikes = createAsyncThunk('likes/fetch', async (postId) => {
+  const { data } = await postApi.getPostLikes(postId);
+  return data;
+});
+
+export const unlikePost = createAsyncThunk('likes/unlikePost', async (postId) => {
+  const { data } = await postApi.unlikePost(postId);
+  return (data);
+});
+
+export const likePost = createAsyncThunk('likes/likePost', async (postId) => {
+  const { data } = await postApi.likePost(postId);
+  return (data);
+});

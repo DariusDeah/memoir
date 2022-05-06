@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 function ProfileStats({
   userPostsLength,
   userFollowersLength,
-  userCollectionsLength
+  userCollectionsLength,
+  userFollowingLength
 }) {
   return (
     <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
@@ -29,7 +30,7 @@ function ProfileStats({
         </div>
         <div className="text-center">
           <h6 className="text-3xl font-bold text-deep-purple-accent-400">
-            24.5K
+            {userFollowingLength}
           </h6>
           <p className="font-bold">Following</p>
         </div>
@@ -40,7 +41,8 @@ function ProfileStats({
 ProfileStats.propTypes = {
   userPostsLength: PropTypes.number.isRequired,
   userCollectionsLength: PropTypes.number.isRequired,
-  userFollowersLength: PropTypes.number.isRequired
+  userFollowersLength: PropTypes.number.isRequired,
+  userFollowingLength: PropTypes.number.isRequired
 };
 
 export default ProfileStats;

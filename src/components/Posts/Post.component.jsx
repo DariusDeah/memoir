@@ -64,7 +64,7 @@ function Post() {
                   )}
                 </div>
                 <div>
-                  <Link to={`/posts/${post.id}`}>
+                  <Link to={`/posts/${post._id}`}>
                     <img
                       className="
                               object-cover object-center
@@ -102,17 +102,18 @@ function Post() {
                     <p className="font-bold text-red-600">-Draft</p>
                   )}
                 </p>
-                <div className="flex items-center mt-10 ">
+                <div className="flex items-center mt-10  ">
                   <Avatar
                     photo={post.creator.photo}
                     // FIXME dont use ._id
                     id={post.creator._id}
                     styles="w-12 h-12"
                   />
-                  <div>
+
+                  <div className="px-2">
                     <p
                       aria-label="Author"
-                      className="font-semibold text-gray-800 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                      className="font-semibold text-gray-800 transition-colors duration-200 hover:text-deep-purple-accent-400 "
                     >
                       {post.creator.name}
                     </p>

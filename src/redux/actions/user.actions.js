@@ -8,8 +8,8 @@ export const getUser = createAsyncThunk('user/fetch', async (userId) => {
   return data;
 });
 
-export const updateUser = createAsyncThunk('account/update', async (userId, userData) => {
-  console.log({ userData });
-  const { data } = await userApi.updateUser(userId, userData);
+export const updateUser = createAsyncThunk('account/update', async (userData) => {
+  const { userId, values } = userData;
+  const { data } = await userApi.updateUser(userId, values);
   return data;
 });

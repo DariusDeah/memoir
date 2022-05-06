@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { postApi } from '../../api/Post.api';
-import { getPost } from '../../redux/actions/posts.actions';
+import { editPostData, getPost } from '../../redux/actions/posts.actions';
 
 function usePost() {
   const dispatch = useDispatch();
@@ -47,9 +47,9 @@ function usePost() {
     postApi.editPost(postId, { status: 'draft' });
   };
   const makePublicFunction = (postId) => {
-    postApi.editPost(postId, {
-      status: 'completed'
-    });
+    // postApi.editPost(postId, {
+    // status: 'completed'
+    dispatch(editPostData({ postId, status: 'completed' }));
   };
 
   // TODO when clicking on a post pic it should take you to the post no matter what url you are at
