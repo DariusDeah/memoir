@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
+  createPost,
   getDraftPosts, getFeaturedPosts, getPost, getPostFeed, getPosts, getRelatedPosts
 } from '../actions/posts.actions';
 
@@ -42,6 +43,22 @@ export const postSlice = createSlice({
       state.postData = true;
     },
     [getPost.rejected]: (state, action) => {
+      state.pending = false;
+      state.error = true;
+      state.post = {};
+    },
+    [createPost.pending]: (state) => {
+      state.pending = true;
+      state.error = false;
+      state.postData = false;
+    },
+    [createPost.fulfilled]: (state, action) => {
+      state.pending = false;
+      state.error = false;
+      state.post = action.payload;
+      state.postData = true;
+    },
+    [createPost.rejected]: (state, action) => {
       state.pending = false;
       state.error = true;
       state.post = {};

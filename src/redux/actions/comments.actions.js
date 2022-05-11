@@ -23,3 +23,7 @@ export const editComment = createAsyncThunk('comments/edit', async (commentData)
   const { data } = await commentApi.editComment(commentId, values);
   return data;
 });
+export const deleteComment = createAsyncThunk('comments/delete', async (commentId) => {
+  const { data } = await commentApi.deleteComment(commentId);
+  return data;
+});

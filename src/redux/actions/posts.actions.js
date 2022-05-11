@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { postApi } from '../../api/Post.api';
-import { Post_Action_Types } from '../constants/action-types';
 
 // Action creators
 export const getPosts = createAsyncThunk('post/fetchPosts', async (query) => {
@@ -16,7 +15,10 @@ export const getPost = createAsyncThunk('post/fetchOnePost', async (postId) => {
   const { data } = await postApi.getPost(postId);
   return data;
 });
-
+export const createPost = createAsyncThunk('post/create', async (postData) => {
+  const { data } = await postApi.createPost(postData);
+  return data;
+});
 export const getDraftPosts = createAsyncThunk('post/fetchDrafts', async () => {
   const { data } = await postApi.getDrafts();
   return data;

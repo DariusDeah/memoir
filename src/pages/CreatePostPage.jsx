@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik, useFormik } from 'formik';
 import * as yup from 'yup';
 import ImageUpload from '../components/PostCreation/ImageUpload.component';
@@ -8,6 +8,8 @@ import TagsList from '../components/UI/TagsList.ui';
 import RichTextEditor from '../Forms/RichTextEditor.form';
 import { postApi } from '../api/Post.api';
 import { Tag_Types } from '../models/tags.model';
+import Alert from '../components/UI/Alert.ui';
+import { createPost } from '../redux/actions/posts.actions';
 
 const maxCharacters = 2500;
 const schema = yup.object().shape({
@@ -21,26 +23,24 @@ const schema = yup.object().shape({
   tags: yup.array().max(3)
 });
 function CreatePostPage() {
+  const { account, loggedIn } = useSelector((state) => state.account);
+  const [selectedImage, setSelectedImage] = useState('');
+  const [content, setContent] = useState('');
+  const dispatch = useDispatch();
+  const selectedTags = [];
   const formik = useFormik({
     initialValues: {
-      title: '' || 'No Title Yet',
-      content: '' || 'No Content Yet',
+      title: 'No Title Yet',
+      content: 'No Content Yet',
       coverImg: null,
       status: '',
       tags: []
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      // setDisabled(true);
-      console.log({ values });
-      postApi.createPost(values);
-      // formik.resetForm();
+      dispatch(createPost(values));
     }
   });
-  const { account, loggedIn } = useSelector((state) => state.account);
-  const [selectedImage, setSelectedImage] = useState('');
-  const [content, setContent] = useState('');
-  const selectedTags = [];
 
   const chooseImage = (image) => {
     setSelectedImage(image.target.files[0]);
@@ -72,7 +72,6 @@ function CreatePostPage() {
   const SetStatus = (status) => {
     formik.values.status = status;
   };
-
   return (
     <>
       <h1 className="text-2xl text-center al text-grey-400 font-bold pb-6">
@@ -139,7 +138,7 @@ function CreatePostPage() {
             </span>
           </button>
           <button
-            className="relative inline-block mt-5 px-8 py-3 overflow-hidden border border-green-600 group focus:outline-none focus:ring"
+            className="relative inline-block mt-5 px-8 py-3 overflow-hidden border border-green-600 group focus:outline-none focus:ring disabled:bg-slate-400 "
             type="submit"
             onClick={(e) => {
               e.preventDefault();

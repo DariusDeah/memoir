@@ -42,7 +42,7 @@ function PostPage() {
         >
           {createComment ? 'cancel comment' : '+comment'}
         </button>
-        <div className="px-4  ">{createComment && <CommentCreate />}</div>
+        <div className="px-4 ">{createComment && <CommentCreate />}</div>
       </div>
       <div className="px-4 lg:px-2">
         {comments && data && <Comment commentData={comments} />}

@@ -5,10 +5,8 @@ import user from '../slices/user.slice';
 import collections from '../slices/collections.slice';
 // import user from './user'
 import comments from '../slices/comments.slice';
-import followers from './followers.reducer';
 import likes from '../slices/likes.slice';
 // import profile from './profile'
-import profileCollections from './profileCollections.reducer';
 
 export default combineReducers({
   posts,
@@ -17,7 +15,4 @@ export default combineReducers({
   user,
   comments,
   likes,
-  // profile,
-  profileCollections,
-  followers
 });

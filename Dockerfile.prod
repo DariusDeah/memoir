@@ -1,0 +1,11 @@
+#first build 
+FROM node:14 AS react-build
+WORKDIR /usr/src/app
+COPY ["./package.json","./package-lock.json", "./"]
+RUN npm install
+COPY . .
+RUN npm run build
+EXPOSE 8080
+FROM nginx
+COPY --from=react-build /usr/src/app/build /usr/share/nginx/html
+

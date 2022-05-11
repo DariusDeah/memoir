@@ -13,12 +13,8 @@ import { getPost } from '../redux/actions/posts.actions';
 
 const maxCharacters = 2500;
 const schema = yup.object().shape({
-  title: yup.string().required('title required'),
-  content: yup
-    .string()
-    .min(1)
-    .max(maxCharacters)
-    .required('post content is required '),
+  title: yup.string(),
+  content: yup.string().min(1).max(maxCharacters),
   coverImg: yup.mixed(),
   tags: yup.array().max(3)
 });
@@ -26,7 +22,6 @@ function EditPostPage() {
   const { postId } = useParams();
   const dispatch = useDispatch();
   const { post, postData } = useSelector((state) => state.posts);
-  console.log(post);
   const { account } = useSelector((state) => state.account);
   const [selectedImage, setSelectedImage] = useState('');
   const [content, setContent] = useState(post.content);
@@ -81,7 +76,7 @@ function EditPostPage() {
   };
 
   return (
-    <>
+    <div>
       {post && postData && (
         <form className="p-5" onSubmit={formik.handleSubmit}>
           <div className="flex pb-3">
@@ -112,12 +107,11 @@ function EditPostPage() {
             onChange={formik.handleChange}
             className="p-5  border-2 border-black rounded-md w-full font-bold"
             // placeholder={post.title}
-            value={post.title}
+            placeholder={post.title}
           />
           <RichTextEditor
             writeContent={writeContent}
-            // placeholder={post.content}
-            value={post.content}
+            placeholder={post.content}
           />
           <TagsList
             tags={Tag_Types}
@@ -163,7 +157,7 @@ function EditPostPage() {
           </div>
         </form>
       )}
-    </>
+    </div>
   );
 }
 

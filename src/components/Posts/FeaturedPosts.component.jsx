@@ -36,7 +36,7 @@ function FeaturedPosts() {
                 </Link>
               </div>
               <p className="mb-4 text-base text-gray-700 md:text-lg">
-                {featuredPosts[0].content.substring(0, 100)}
+                {featuredPosts[0].contentShort}
               </p>
               <div className="flex items-center">
                 <a href="/" aria-label="Author" className="mr-3">
@@ -98,7 +98,7 @@ function FeaturedPosts() {
                   </Link>
                 </div>
                 <p className="mb-4 text-base text-gray-700 md:text-lg">
-                  {featuredPosts[1].content.substring(0, 100)}
+                  {featuredPosts[1].contentShort}
                 </p>
 
                 <div className="flex items-center">
@@ -161,7 +161,7 @@ function FeaturedPosts() {
                   </Link>
                 </div>
                 <p className="mb-4 text-base text-gray-700 md:text-lg">
-                  {featuredPosts[2].content.substring(0, 100)}
+                  {featuredPosts[2].contentShort}
                 </p>
 
                 <div className="flex items-center">

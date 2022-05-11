@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { accountApi } from '../../api/Account.api';
-import { userApi } from '../../api/User.api';
 
 export const refreshAccount = createAsyncThunk('account/refresh', async () => {
   const { data } = await accountApi.refreshAccount();

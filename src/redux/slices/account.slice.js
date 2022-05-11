@@ -10,7 +10,8 @@ export const accountSlice = createSlice({
     account: {},
     loggedIn: null,
     pending: false,
-    error: false
+    error: false,
+    logginError: false
   },
   reducers: {},
   extraReducers: {
@@ -29,7 +30,6 @@ export const accountSlice = createSlice({
     },
     [refreshAccount.rejected]: (state, action) => {
       state.pending = false;
-      state.error = action.error;
       state.account = {};
       state.loggedIn = false;
     },
@@ -66,7 +66,7 @@ export const accountSlice = createSlice({
     },
     [loginAccount.rejected]: (state, action) => {
       state.pending = false;
-      state.loginError = true;
+      state.loginError = action.error;
       state.error = action.error;
     },
     [signupAccount.pending]: (state) => {
@@ -80,10 +80,12 @@ export const accountSlice = createSlice({
       state.account.photo = action.payload.photo;
       state.account.email = action.payload.email;
       state.account.id = action.payload._id;
+      state.loggedIn = true;
     },
     [signupAccount.rejected]: (state, action) => {
       state.pending = false;
       state.error = action.error;
+      state.loginError = action.error;
     },
   }
 });

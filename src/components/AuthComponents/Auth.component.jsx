@@ -1,4 +1,7 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import Alert from '../UI/Alert.ui';
 import GoogleOauthIcon from './GoogleOauthIcon.component';
 import LoginForm from './LoginForm.component';
 import SignupForm from './SignupForm.component';
@@ -6,8 +9,19 @@ import useToggleNewUser from './toggleNewUser.hook';
 
 function AuthPage() {
   const { isNewUser, toggleNewUser } = useToggleNewUser();
+  const { account, loggedIn, loginError } = useSelector(
+    (state) => state.account
+  );
+  const nav = useNavigate();
+  if (loggedIn) {
+    nav('/');
+  }
   return (
     <div className="flex max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg  lg:max-w-4xl">
+      {loginError && (
+        <Alert title={loginError.name} message={loginError.message} />
+      )}
+
       <div className="hidden bg-cover lg:block lg:w-1/2">
         <img
           className="img-responsive object-fill"

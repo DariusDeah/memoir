@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { commentApi } from '../../api/comment.api';
+import {
+  deleteComment,
+  editComment
+} from '../../redux/actions/comments.actions';
 import Avatar from '../UI/Avatar.ui';
 import DottedDropdown from '../UI/DottedDropdown.ui';
 
@@ -15,13 +18,21 @@ function Comment({ commentData }) {
       action: 'editComment',
       type: 'Edit'
     },
-    { id: 2, title: 'Delete' }
+    {
+      id: 2,
+      title: 'Delete',
+      action: 'removeComment',
+      type: 'Delete'
+    }
   ];
   const dateFormat = (date) => {
     new Date(date).toDateString().substring(4, date.length);
   };
-  const editComment = async (commentId) => {
-    dispatch(editComment({ commentId, values: commentData }));
+  const editCurrentComment = async (commentId) => {
+    dispatch(editComment({ commentId, values: commentValues }));
+  };
+  const deleteCurrentComment = async (commentId) => {
+    dispatch(deleteComment(commentId));
   };
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -60,7 +71,8 @@ function Comment({ commentData }) {
                 {account.id === comment.creator._id && (
                   <DottedDropdown
                     items={items}
-                    editFunction={editComment}
+                    editFunction={editCurrentComment}
+                    deleteFunction={deleteCurrentComment}
                     itemId={comment._id}
                   />
                 )}

@@ -31,6 +31,9 @@ function DottedDropdown({
       Delete: {
         removePost: () => {
           deleteFunction(itemId);
+        },
+        removeComment: () => {
+          deleteFunction(itemId);
         }
       },
       MakePrivate: {

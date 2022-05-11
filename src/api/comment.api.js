@@ -1,7 +1,6 @@
 import { API_V1 } from '../config/axios.config';
 
 class CommentAPI {
-  // baseRoute = "http://localhost:5000/api/v1/comments";
   async getCommentById(commentId, query) {
     try {
       await API_V1.get(`comments/${commentId}${query}`);
@@ -34,10 +33,10 @@ class CommentAPI {
 
   async deleteComment(commentId) {
     try {
-      const comment = await API_V1.delete(`comments/${commentId}`, {
+      const res = await API_V1.delete(`comments/${commentId}`, {
         withCredentials: true,
       });
-      return comment;
+      return res.data;
     } catch (error) {
       throw new Error('error deleting comment');
     }
