@@ -21,7 +21,7 @@ import Collections from '../components/Collections/ColectionsList.component';
 
 function ProfilePage() {
   const [selectedTab, setSelectedTab] = useState(2);
-  console.log({ selectedTab });
+  // console.log({ selectedTab });
   const dispatch = useDispatch();
   const { userId } = useParams();
   const { account, loggedIn } = useSelector((state) => state.account);
@@ -34,7 +34,6 @@ function ProfilePage() {
   const fetchUserPosts = () => {
     userId && dispatch(getPosts(`?creatorId=${userId}`));
   };
-  console.log({ userCollections });
   const fetchUserDrafts = () => {
     dispatch(getDraftPosts());
   };
