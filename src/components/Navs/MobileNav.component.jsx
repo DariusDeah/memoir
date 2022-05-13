@@ -83,45 +83,42 @@ function MobileNav({
                     Explore🌐
                   </a>
                 </li>
+                <li   onClick={routeToAuthPage}>
+                  <Link to="create-post">
+                    <p
+                      aria-label="create"
+                      title="Our product"
+                      className={NavStyles.navLinks}
+                      onClick={toggleModal}
+                    >
+                      Create+
+                      
+                    </p>
+                  </Link>
+                </>
                 <li>
-                  <a
-                    href="/"
-                    aria-label="Our product"
-                    title="Our product"
-                    className={NavStyles.navLinks}
-                    onClick={toggleModal}
-                  >
-                    Create+
-                    {modalActive && (
-                      <Modal
-                        showModal
-                        title="Not So Fast.."
-                        content="You must be logged in to create a post, if you're a new user then create an account now and join the fun! "
-                        confirmOption="Create account!"
-                        closeModal={(e) => closeModal(e)}
-                      />
-                    )}
-                  </a>
+                  <Link to="search">
+                    <a
+                      href="/"
+                      aria-label="Product pricing"
+                      title="Product pricing"
+                      className={NavStyles.navLinks}
+                    >
+                      Search
+                    </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="/"
-                    aria-label="Product pricing"
-                    title="Product pricing"
-                    className={NavStyles.navLinks}
-                  >
-                    Search
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/"
-                    aria-label="Product pricing"
-                    title="Product pricing"
-                    className={NavStyles.navLinks}
-                  >
-                    Features+
-                  </a>
+                  <Link to="feature-request">
+                    <a
+                      href="/"
+                      aria-label="Product pricing"
+                      title="Product pricing"
+                      className={NavStyles.navLinks}
+                    >
+                      Features+
+                    </a>
+                  </Link>
                 </li>
                 {/* FIXME change this logic */}
                 {account && loggedIn ? (

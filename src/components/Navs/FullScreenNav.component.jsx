@@ -33,7 +33,7 @@ function FullScreenNav({
         <li onClick={routeToAuthPage}>
           <Link to="create-post">
             <p
-              aria-label="Our product"
+              aria-label="create"
               title="Create a post"
               className={NavStyles.navLinks}
             >
