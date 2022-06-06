@@ -28,7 +28,7 @@ function FeaturesRequestPage() {
             <div className="inline-flex w-full mt-4 overflow-hidden rounded-lg shadow sm:w-auto sm:mx-2 sm:mt-0">
               <a
                 className="inline-flex items-center justify-center w-full px-5 py-3 text-base font-medium text-white transition-colors duration-150 transform sm:w-auto bg-gradient-to-r from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-600"
-                href="mailto:comdariusdeah21@gmail.com?subject = Features"
+                href="mailto:dariusdeah21@gmail.com?subject = Features"
               >
                 <span className="mx-2">Email a Request</span>
               </a>

@@ -77,8 +77,8 @@ function CreatePostPage() {
       <h1 className="text-2xl text-center al text-grey-400 font-bold pb-6">
         Create +
       </h1>
-      <form className="p-5" onSubmit={formik.handleSubmit}>
-        <div className="flex pb-3">
+      <form className="p-5 bg-white" onSubmit={formik.handleSubmit}>
+        <div className="flex pb-3 ">
           {/* TODO get rid of this ternary and block this page from being accesed if the user is not signed in  */}
           {account && loggedIn && (
             <>

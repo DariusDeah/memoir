@@ -31,7 +31,7 @@ function App() {
 
   return (
     <Router>
-      <div className="flex-row mx-auto h-full ">
+      <div className="flex-row mx-auto h-screen bg-slate-50 ">
         <div
           className="sticky top-0 z-40 bg-white row-span-12 mh-20 mb-10 border
       border-b-black"
@@ -40,7 +40,7 @@ function App() {
 
         </div>
 
-        <div className=" row-span-12 ">
+        <div className=" row-span-12 bg-slate-50 ">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="create-post" element={<CreatePostPage />} />

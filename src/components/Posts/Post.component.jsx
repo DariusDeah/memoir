@@ -42,10 +42,10 @@ function Post() {
       >
         {error && <h1>{error.message}</h1>}
 
-        <div className="grid w-full grid-cols-1 gap-7 mx-auto lg:grid-cols-3">
+        <div className="grid w-full grid-cols-1 gap-7 mx-auto lg:grid-cols-3 ">
           {posts &&
             posts.map((post) => (
-              <div className="p-6" key={post.id}>
+              <div className="p-6 bg-white rounded-md h-fit" key={post.id}>
                 <div className="flex justify-between">
                   <h2 className=" text-xs font-semibold tracking-widest text-gray-600 uppercase pb-2">
                     {new Date(post.createdAt)

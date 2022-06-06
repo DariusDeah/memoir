@@ -23,7 +23,7 @@ function PostLayout1() {
   } = usePostLayout();
 
   return (
-    <article className="prose md:prose-xl max-w-2xl px-6 py-24 mx-auto space-y-12 bg-coolGray-100 text-coolGray-900">
+    <article className="prose md:prose-xl max-w-6xl px-6 py-24 mx-auto space-y-12 bg-white text-coolGray-900 ">
       {postData && loggedIn && (
         <>
           <div className="w-full mx-auto space-y-4 text-center">

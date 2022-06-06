@@ -74,7 +74,15 @@ class UserApi {
 
   async getCreatOfMonth() {
     try {
-      const res = await API_V1.get('creator-of-month');
+      // API_V1.interceptors.request.use(
+      //   config => {
+      //     // config.headers['Access-Control-Max-Age'] = 300
+      //     config.headers['Cache-Control'] = 'public, max-age=300' 
+      //     return config
+      //   },
+        
+      //   )
+       const res =  await API_V1.get('creator-of-month')
       return res.data.data[0];
     } catch (error) {
       throw new Error('error getting creator of month');

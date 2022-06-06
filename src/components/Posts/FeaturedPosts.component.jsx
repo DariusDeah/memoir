@@ -11,7 +11,7 @@ function FeaturedPosts() {
         <h1 className="font-bold text-xl lg:text-4xl pb-10 ">Featured Posts</h1>
         <div className="grid gap-10 row-gap-8  lg:grid-cols-5">
           {featuredPosts[0] && !pending && (
-            <div className="lg:col-span-2  mb-12 lg:mb-0">
+            <div className="lg:col-span-2 h-fit mb-12 lg:mb-0 bg-white p-10">
               <p className="mb-2 text-xs font-semibold tracking-wide text-gray-600 uppercase">
                 {featuredPosts[0].createdAt}
               </p>
@@ -74,8 +74,8 @@ function FeaturedPosts() {
           )}
           <div className="flex flex-col space-y-8 lg:col-span-3 lg:ml-12 ">
             {featuredPosts[1] && (
-              <div className=" mb-12 lg:mb-0">
-                <p className="mb-2 text-xs font-semibold tracking-wide text-gray-600 uppercase">
+              <div className=" mb-12 lg:mb-0 bg-white p-10">
+                <p className="mb-2 text-xs font-semibold tracking-wide text-gray-600 uppercase ">
                   {featuredPosts[1].createdAt}
                 </p>
                 <div className="mb-3">
@@ -137,7 +137,7 @@ function FeaturedPosts() {
             )}
 
             {featuredPosts[2] && (
-              <div className=" mb-12 lg:mb-0">
+              <div className=" mb-12 lg:mb-0 bg-white p-10">
                 <p className="mb-2 text-xs font-semibold tracking-wide text-gray-600 uppercase">
                   {featuredPosts[2].createdAt}
                 </p>

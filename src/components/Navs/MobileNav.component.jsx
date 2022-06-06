@@ -74,16 +74,18 @@ function MobileNav({
             <nav>
               <ul className="space-y-4">
                 <li>
-                  <a
-                    href="/"
-                    aria-label="Our product"
-                    title="Our product"
-                    className={NavStyles.navLinks}
-                  >
-                    Explore🌐
-                  </a>
+                  <Link to="/explore">
+                    <a
+                      href="/"
+                      aria-label="Our product"
+                      title="Our product"
+                      className={NavStyles.navLinks}
+                    >
+                      Explore🌐
+                    </a>
+                  </Link>
                 </li>
-                <li   onClick={routeToAuthPage}>
+                <li onClick={routeToAuthPage}>
                   <Link to="create-post">
                     <p
                       aria-label="create"
@@ -92,10 +94,9 @@ function MobileNav({
                       onClick={toggleModal}
                     >
                       Create+
-                      
                     </p>
                   </Link>
-                </>
+                </li>
                 <li>
                   <Link to="search">
                     <a
