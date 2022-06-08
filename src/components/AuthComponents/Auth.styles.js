@@ -25,19 +25,19 @@ const label = {
 };
 export const AuthStyles = {
   button: `
-  ${button.color}
-   ${button.size}
-    ${button.animation}
-     ${button.pseudoEffects} 
-     ${button.space}
+${button.color}
+${button.size}
+${button.animation}
+${button.pseudoEffects} 
+${button.space}
      `,
   input: `${input.color} ${input.size} ${input.animation} ${input.pseudoEffects} ${input.space} ${input.layout}`,
   label: `
-  ${label.color}
-   ${label.size} 
-   ${label.animation}
-   ${label.pseudoEffects}
-    ${label.space}
-     ${label.layout}
-     `
+${label.color}
+${label.size} 
+${label.animation}
+${label.pseudoEffects}
+${label.space}
+${label.layout}
+ `
 };
